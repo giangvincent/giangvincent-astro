@@ -1,20 +1,27 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { fetchBlogPosts, type BlogPost as RemoteBlogPost } from '../../lib/blogApi';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await fetchBlogPosts();
 	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
+		params: { slug: post.slug },
+		props: { post },
 	}));
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
-const { Content } = await render(post);
+type Props = {
+	post: RemoteBlogPost;
+};
+
+const { post } = Astro.props;
 ---
 
-<BlogPost {...post.data}>
-	<Content />
+<BlogPost
+	title={post.title}
+	description={post.excerpt || post.title}
+	pubDate={post.publishedAt}
+	heroImageUrl={post.coverImageUrl}
+>
+	<section class="post-body" set:html={post.body}></section>
 </BlogPost>
