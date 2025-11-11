@@ -1,18 +1,18 @@
 ---
-import PixelLayout from '../components/pixel/PixelLayout.astro';
-import PixelSection from '../components/pixel/PixelSection.astro';
-import PixelCard from '../components/pixel/PixelCard.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { fetchAboutContent, fetchHomepageContent } from '../lib/contentApi';
+import PixelLayout from "../components/pixel/PixelLayout.astro";
+import PixelSection from "../components/pixel/PixelSection.astro";
+import PixelCard from "../components/pixel/PixelCard.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { fetchAboutContent, fetchHomepageContent } from "../lib/contentApi";
 
-const aboutContent = await fetchAboutContent('default');
+const aboutContent = await fetchAboutContent("default");
 const homepageContent = await fetchHomepageContent();
 
 const navItems = [
-	{ id: 'intro', label: 'Intro' },
-	{ id: 'portfolios', label: 'Portfolios' },
-	{ id: 'services', label: 'Services' },
-	{ id: 'blogs', label: 'Blogs' },
+  { id: "intro", label: "Intro" },
+  { id: "portfolios", label: "Portfolios" },
+  { id: "services", label: "Services" },
+  { id: "blogs", label: "Blogs" },
 ];
 
 const topPortfolios = homepageContent.portfolios.slice(0, 4);
@@ -21,95 +21,93 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
 ---
 
 <PixelLayout
-	pageTitle={SITE_TITLE}
-	description={SITE_DESCRIPTION}
-	navItems={navItems}
-	sidebarIntro="Navigate the console to jump between the latest transmissions."
->
-	<PixelSection id="intro" label="Intro" title={aboutContent.title}>
-		<div class="pixel-intro-grid">
-			<div>
-				<p class="pixel-intro-body">{aboutContent.summary}</p>
-				<a class="pixel-cta" href="/about">More details</a>
-			</div>
-			<div class="pixel-intro-body" set:html={aboutContent.body}></div>
-		</div>
-	</PixelSection>
+  pageTitle={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  navItems={navItems}
+  sidebarIntro="Navigate the console to jump between the latest transmissions.">
+  <PixelSection id="intro" label="Intro" title={aboutContent.title}>
+    <div class="pixel-intro-grid">
+      <div class="pixel-intro-body" set:html={aboutContent.body} />
+    </div>
+    <div class="pixel-intro-grid">
+      <p class="pixel-intro-body">{aboutContent.summary}</p>
+      <a class="pixel-cta" href="/about">More details</a>
+    </div>
+  </PixelSection>
 
-	<PixelSection
-		id="portfolios"
-		label="Lab Drop"
-		title="Portfolios"
-		description="Latest launches and experiments from the GV lab."
-		footerHref="/portfolio"
-	>
-		<div class="pixel-card-grid">
-			{
-				topPortfolios.length > 0 ? (
-					topPortfolios.map((card) => (
-						<PixelCard
-							title={card.title}
-							description={card.description}
-							href={card.href}
-							coverImageUrl={card.coverImageUrl}
-							tags={card.tags}
-						/>
-					))
-				) : (
-					<div class="pixel-empty-state">No transmissions yet. Check back soon.</div>
-				)
-			}
-		</div>
-	</PixelSection>
+  <PixelSection
+    id="portfolios"
+    label="Lab Drop"
+    title="Portfolios"
+    description="Latest launches and experiments from the GV lab."
+    footerHref="/portfolio">
+    <div class="pixel-card-grid">
+      {
+        topPortfolios.length > 0 ? (
+          topPortfolios.map((card) => (
+            <PixelCard
+              title={card.title}
+              description={card.description}
+              href={card.href}
+              coverImageUrl={card.coverImageUrl}
+              tags={card.tags}
+            />
+          ))
+        ) : (
+          <div class="pixel-empty-state">
+            No transmissions yet. Check back soon.
+          </div>
+        )
+      }
+    </div>
+  </PixelSection>
 
-	<PixelSection
-		id="services"
-		label="Capabilities"
-		title="Services"
-		description="Delivery menu for product, platform, and growth work."
-		footerHref="/services"
-	>
-		<div class="pixel-card-grid">
-			{
-				topServices.length > 0 ? (
-					topServices.map((card) => (
-						<PixelCard
-							title={card.title}
-							description={card.description}
-							href={card.href}
-							coverImageUrl={card.coverImageUrl}
-							tags={card.tags}
-						/>
-					))
-				) : (
-					<div class="pixel-empty-state">No services published yet.</div>
-				)
-			}
-		</div>
-	</PixelSection>
+  <PixelSection
+    id="services"
+    label="Capabilities"
+    title="Services"
+    description="Delivery menu for product, platform, and growth work."
+    footerHref="/services">
+    <div class="pixel-card-grid">
+      {
+        topServices.length > 0 ? (
+          topServices.map((card) => (
+            <PixelCard
+              title={card.title}
+              description={card.description}
+              href={card.href}
+              coverImageUrl={card.coverImageUrl}
+              tags={card.tags}
+            />
+          ))
+        ) : (
+          <div class="pixel-empty-state">No services published yet.</div>
+        )
+      }
+    </div>
+  </PixelSection>
 
-	<PixelSection
-		id="blogs"
-		label="Logs"
-		title="Blogs"
-		description="Fresh notes, tutorials, and behind-the-scenes logs."
-		footerHref="/blog"
-	>
-		<div class="pixel-card-grid">
-			{
-				topBlogs.length > 0 ? (
-					topBlogs.map((card) => (
-						<PixelCard
-							title={card.title}
-							description={card.description}
-							href={card.href}
-							coverImageUrl={card.coverImageUrl}
-						/>
-					))
-				) : (
-					<div class="pixel-empty-state">No logs yet. Stay tuned.</div>
-				)
-			}
-		</div>
-	</PixelSection>
+  <PixelSection
+    id="blogs"
+    label="Logs"
+    title="Blogs"
+    description="Fresh notes, tutorials, and behind-the-scenes logs."
+    footerHref="/blog">
+    <div class="pixel-card-grid">
+      {
+        topBlogs.length > 0 ? (
+          topBlogs.map((card) => (
+            <PixelCard
+              title={card.title}
+              description={card.description}
+              href={card.href}
+              coverImageUrl={card.coverImageUrl}
+            />
+          ))
+        ) : (
+          <div class="pixel-empty-state">No logs yet. Stay tuned.</div>
+        )
+      }
+    </div>
+  </PixelSection>
 </PixelLayout>

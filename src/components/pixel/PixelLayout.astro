@@ -33,7 +33,7 @@ const hasNav = navItems.length > 0;
 		<BaseHead title={pageTitle} description={description} />
 	</head>
 	<body class="pixel-body">
-		<div class="pixel-logo-floating">{logoText}</div>
+		<div class="pixel-logo-floating"><a href="/">{logoText}</a></div>
 		<div class={`pixel-screen${hasNav ? '' : ' pixel-screen--full'}`}>
 			{hasNav && (
 				<aside class="pixel-sidebar">

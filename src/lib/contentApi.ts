@@ -3,13 +3,19 @@ import { constants as fsConstants } from 'node:fs';
 import { buildApiUrl, resolveCacheFile } from './remoteApi';
 
 type ApiAboutContent = {
-	id?: number | string;
-	title?: string;
-	summary?: string | null;
-	excerpt?: string | null;
-	body?: string | null;
-	content?: string | null;
-	hero_image_url?: string | null;
+	slug?: string;
+	headline?: string | null;
+	subheadline?: string | null;
+	bio?: string | null;
+	location?: string | null;
+	years_experience?: number | null;
+	primary_cta_label?: string | null;
+	primary_cta_url?: string | null;
+	secondary_cta_label?: string | null;
+	secondary_cta_url?: string | null;
+	skills?: string[] | null;
+	avatar_url?: string | null;
+	meta?: Record<string, unknown> | unknown[];
 };
 
 type ApiHomepageService = {
@@ -64,6 +70,13 @@ export type AboutContent = {
 	title: string;
 	summary: string;
 	body: string;
+	location?: string;
+	yearsExperience?: number;
+	primaryCtaLabel?: string;
+	primaryCtaUrl?: string;
+	secondaryCtaLabel?: string;
+	secondaryCtaUrl?: string;
+	skills: string[];
 	heroImageUrl?: string;
 };
 
@@ -98,14 +111,22 @@ function normalizeAboutContent(payload: ApiAboutContent | null | undefined): Abo
 			title: 'About Me',
 			summary: 'Story coming soon.',
 			body: '<p>Content is on the way.</p>',
+			skills: [],
 		};
 	}
 
 	return {
-		title: payload.title ?? 'About Me',
-		summary: payload.summary ?? payload.excerpt ?? '',
-		body: payload.body ?? payload.content ?? '',
-		heroImageUrl: payload.hero_image_url ?? undefined,
+		title: payload.headline ?? 'About Me',
+		summary: payload.subheadline ?? '',
+		body: payload.bio ?? '',
+		location: payload.location ?? undefined,
+		yearsExperience: payload.years_experience ?? undefined,
+		primaryCtaLabel: payload.primary_cta_label ?? undefined,
+		primaryCtaUrl: payload.primary_cta_url ?? undefined,
+		secondaryCtaLabel: payload.secondary_cta_label ?? undefined,
+		secondaryCtaUrl: payload.secondary_cta_url ?? undefined,
+		skills: payload.skills ?? [],
+		heroImageUrl: payload.avatar_url ?? undefined,
 	};
 }
 

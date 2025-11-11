@@ -1,5 +1,19 @@
 {
-  "about": null,
+  "about": {
+    "slug": "default",
+    "headline": "About me",
+    "subheadline": null,
+    "bio": "<p>This is me</p>",
+    "location": null,
+    "years_experience": 6,
+    "primary_cta_label": "Contact me",
+    "primary_cta_url": "mailto:giang.dlinh@gmail.com",
+    "secondary_cta_label": null,
+    "secondary_cta_url": null,
+    "skills": [],
+    "avatar_url": null,
+    "meta": []
+  },
   "services": [
     {
       "slug": "service-1",

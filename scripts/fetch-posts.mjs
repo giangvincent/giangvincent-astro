@@ -26,7 +26,12 @@ const tasks = [
 		label: 'about content',
 		endpoint: '/api/v1/content/about?slug=default',
 		cacheName: 'content-about-default.json',
-		fallback: { title: 'About Me', summary: '', body: '' },
+		fallback: {
+			headline: 'About Me',
+			subheadline: 'Story coming soon.',
+			bio: '<p>Content is on the way.</p>',
+			skills: [],
+		},
 	},
 	{
 		label: 'homepage content',

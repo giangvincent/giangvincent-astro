@@ -16,6 +16,10 @@ const navItems = (
 		{ id: 'contact', label: 'Contact' },
 	] as Array<{ id: string; label: string } | null>
 ).filter(Boolean) as Array<{ id: string; label: string }>;
+
+const primaryCtaLabel = aboutContent.primaryCtaLabel ?? 'Contact me';
+const primaryCtaUrl = aboutContent.primaryCtaUrl ?? 'mailto:hello@giangvincent.com';
+const secondaryCtaAvailable = Boolean(aboutContent.secondaryCtaLabel && aboutContent.secondaryCtaUrl);
 ---
 
 <PixelLayout
@@ -33,11 +37,45 @@ const navItems = (
 		<div class="pixel-intro-grid">
 			<div class="pixel-intro-body" set:html={aboutContent.body}></div>
 			<div>
-				<p class="pixel-intro-body">
-					I help founders and teams take ideas from sketchbook to production—fast. Product
-					strategy, full-stack builds, and shipping discipline bundled into one partner.
-				</p>
-				<a class="pixel-cta" href="mailto:hello@giangvincent.com">Open a transmission</a>
+				<div class="pixel-intro-body">
+					{
+						aboutContent.location && (
+							<p><strong>Location:</strong> {aboutContent.location}</p>
+						)
+					}
+					{
+						typeof aboutContent.yearsExperience === 'number' && (
+							<p>
+								<strong>Experience:</strong> {aboutContent.yearsExperience}+ years building digital
+								products
+							</p>
+						)
+					}
+					{
+						aboutContent.skills.length > 0 && (
+							<div>
+								<p><strong>Skills radar</strong></p>
+								<ul class="pixel-tag-list">
+									{
+										aboutContent.skills.map((skill) => (
+											<li class="pixel-tag">{skill}</li>
+										))
+									}
+								</ul>
+							</div>
+						)
+					}
+				</div>
+				<div class="pixel-card-tags" style="margin-top:1.5rem;">
+					<a class="pixel-cta" href={primaryCtaUrl}>{primaryCtaLabel}</a>
+					{
+						secondaryCtaAvailable && (
+							<a class="pixel-cta pixel-cta--ghost" href={aboutContent.secondaryCtaUrl}>
+								{aboutContent.secondaryCtaLabel}
+							</a>
+						)
+					}
+				</div>
 			</div>
 		</div>
 	</PixelSection>
@@ -74,7 +112,7 @@ const navItems = (
 		description="Have a roadmap, a stubborn bug, or a moonshot in mind? I’m all ears."
 	>
 		<p class="pixel-intro-body">
-			Send a note to <a href="mailto:hello@giangvincent.com">hello@giangvincent.com</a> with a short
+			Send a note to <a href={primaryCtaUrl}>{primaryCtaUrl.replace('mailto:', '')}</a> with a short
 			brief, a timeline, and any handy context. I’ll reply within 48 hours with next steps and a plan
 			to get things moving.
 		</p>

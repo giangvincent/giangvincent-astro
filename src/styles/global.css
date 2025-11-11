@@ -17,37 +17,46 @@
 		rgba(var(--gray), 33%);
 }
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
-	font-weight: 400;
 	font-style: normal;
+	font-weight: 400;
+	src: url("/fonts/VT323-Regular.ttf") format("truetype");
+	font-family: "VT323";
 	font-display: swap;
 }
+
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
-	font-weight: 700;
 	font-style: normal;
+	font-weight: 600;
+	src: url("/fonts/VT323-Regular.ttf") format("truetype");
+	font-family: "VT323";
+	font-display: swap;
+}
+
+@font-face {
+	font-style: normal;
+	font-weight: 700;
+	src: url("/fonts/PressStart2P-Regular.ttf") format("truetype");
+	font-family: "Press Start 2P";
 	font-display: swap;
 }
 body {
-	font-family: "Atkinson", sans-serif;
 	margin: 0;
-	padding: 0;
-	text-align: left;
 	background: linear-gradient(var(--gray-gradient)) no-repeat;
 	background-size: 100% 600px;
+	padding: 0;
+	font-family: "VT323", sans-serif;
+	text-align: left;
 	word-wrap: break-word;
-	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
 	font-size: 20px;
 	line-height: 1.7;
+	overflow-wrap: break-word;
 }
 main {
-	width: 720px;
-	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
+	width: 720px;
+	max-width: calc(100% - 2em);
 }
 h1,
 h2,
@@ -56,8 +65,9 @@ h4,
 h5,
 h6 {
 	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
+	color: rgb(var(--white));
 	line-height: 1.2;
+	font-family: "Press Start 2P", sans-serif;
 }
 h1 {
 	font-size: 3.052em;
@@ -79,10 +89,10 @@ b {
 	font-weight: 700;
 }
 a {
-	color: var(--accent);
+	color: var(--pixel-border);
 }
 a:hover {
-	color: var(--accent);
+	color: var(--pixel-border-soft);
 }
 p {
 	margin-bottom: 1em;
@@ -101,26 +111,26 @@ table {
 	width: 100%;
 }
 img {
+	border-radius: 8px;
 	max-width: 100%;
 	height: auto;
-	border-radius: 8px;
 }
 code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
+	background-color: rgb(var(--gray-light));
+	padding: 2px 5px;
 }
 pre {
-	padding: 1.5em;
 	border-radius: 8px;
+	padding: 1.5em;
 }
 pre > code {
 	all: unset;
 }
 blockquote {
+	margin: 0px;
 	border-left: 4px solid var(--accent);
 	padding: 0 0 0 20px;
-	margin: 0px;
 	font-size: 1.333em;
 }
 hr {
@@ -137,12 +147,12 @@ hr {
 }
 
 .sr-only {
+	position: absolute !important;
+	margin: 0;
 	border: 0;
 	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
 	width: 1px;
+	height: 1px;
 	overflow: hidden;
 	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
 	clip: rect(1px 1px 1px 1px);
