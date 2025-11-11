@@ -39,6 +39,12 @@ const tasks = [
 		cacheName: 'content-homepage.json',
 		fallback: { portfolios: [], services: [], blogs: [] },
 	},
+	{
+		label: 'services',
+		endpoint: '/api/v1/services',
+		cacheName: 'remote-services.json',
+		fallback: [],
+	},
 ];
 
 const apiHost = new URL(apiBaseUrl).hostname;

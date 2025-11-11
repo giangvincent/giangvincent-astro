@@ -1,0 +1,73 @@
+---
+import PixelLayout from '../../components/pixel/PixelLayout.astro';
+import PixelSection from '../../components/pixel/PixelSection.astro';
+import '../../styles/pixel-theme.css';
+import { fetchServices, type Service } from '../../lib/serviceApi';
+
+export async function getStaticPaths() {
+	const services = await fetchServices();
+	return services.map((service) => ({
+		params: { slug: service.slug },
+		props: { service },
+	}));
+}
+
+type Props = {
+	service: Service;
+};
+
+const { service } = Astro.props as Props;
+const summary = service.excerpt ?? service.subtitle ?? 'Details coming soon.';
+
+const navItems = [
+	{ id: 'overview', label: 'Overview' },
+	{ id: 'details', label: 'Details' },
+];
+---
+
+<PixelLayout
+	pageTitle={`${service.title} | Services`}
+	description={service.excerpt ?? service.subtitle ?? service.title}
+	navItems={navItems}
+	sidebarIntro="Capabilities, outcomes, and the nuts & bolts behind this service."
+>
+	<PixelSection
+		id="overview"
+		label="Capability"
+		title={service.title}
+		description={summary}
+	>
+		<div class="pixel-intro-grid">
+			<div>
+				<p class="pixel-intro-body">{summary}</p>
+				{service.meta.length > 0 && (
+					<ul class="pixel-tag-list">
+						{service.meta.map((item) => (
+							<li class="pixel-tag">{item}</li>
+						))}
+					</ul>
+				)}
+			</div>
+			{
+				service.coverImageUrl && (
+					<img
+						class="pixel-card-cover"
+						src={service.coverImageUrl}
+						alt={service.title}
+						style="height: auto; max-height: 320px;"
+						loading="lazy"
+					/>
+				)
+			}
+		</div>
+	</PixelSection>
+
+	<PixelSection
+		id="details"
+		label="Blueprint"
+		title="How it works"
+		description="Process, scope, and collaboration notes."
+	>
+		<div class="pixel-article-body" set:html={service.body}></div>
+	</PixelSection>
+</PixelLayout>

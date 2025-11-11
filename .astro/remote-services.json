@@ -1,0 +1,27 @@
+[
+  {
+    "slug": "service-1",
+    "title": null,
+    "subtitle": null,
+    "excerpt": null,
+    "body": null,
+    "cover_image_url": null,
+    "is_featured": false,
+    "sort_order": 0,
+    "meta": {
+      "adasd": "asdasd",
+      "asdas": "asdasd"
+    }
+  },
+  {
+    "slug": "service-2",
+    "title": null,
+    "subtitle": null,
+    "excerpt": null,
+    "body": null,
+    "cover_image_url": null,
+    "is_featured": false,
+    "sort_order": 0,
+    "meta": []
+  }
+]

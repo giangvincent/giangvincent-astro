@@ -3,10 +3,9 @@ import PixelLayout from '../../components/pixel/PixelLayout.astro';
 import PixelSection from '../../components/pixel/PixelSection.astro';
 import PixelCard from '../../components/pixel/PixelCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { fetchHomepageContent } from '../../lib/contentApi';
+import { fetchServices, sortServices } from '../../lib/serviceApi';
 
-const homepageContent = await fetchHomepageContent();
-const services = homepageContent.services;
+const services = sortServices(await fetchServices());
 const featured = services.filter((service) => service.isFeatured);
 
 const navItems = (
@@ -32,17 +31,17 @@ const navItems = (
 				description="What I’m shipping most often right now."
 			>
 				<div class="pixel-card-grid">
-			{
-				featured.map((service) => (
-					<PixelCard
-						title={service.title}
-						description={service.description}
-						href={service.href}
-						coverImageUrl={service.coverImageUrl}
-						tags={service.tags}
-					/>
-				))
-			}
+					{
+						featured.map((service) => (
+							<PixelCard
+								title={service.title}
+								description={service.excerpt ?? service.subtitle ?? 'Details coming soon.'}
+								href={`/services/${service.slug}/`}
+								coverImageUrl={service.coverImageUrl}
+								tags={service.meta}
+							/>
+						))
+					}
 				</div>
 			</PixelSection>
 		)
@@ -61,10 +60,10 @@ const navItems = (
 						services.map((service) => (
 							<PixelCard
 								title={service.title}
-								description={service.description}
-								href={service.href}
+								description={service.excerpt ?? service.subtitle ?? 'Details coming soon.'}
+								href={`/services/${service.slug}/`}
 								coverImageUrl={service.coverImageUrl}
-								tags={service.tags}
+								tags={service.meta}
 							/>
 						))
 					}

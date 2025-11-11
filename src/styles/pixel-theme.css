@@ -51,8 +51,8 @@ body.pixel-body::before {
 
 .pixel-logo-floating {
 	position: fixed;
-	top: 1.5rem;
-	left: 1.5rem;
+	top: 0;
+	left: 0;
 	z-index: 10;
 	box-shadow: 0 0 15px var(--pixel-shadow);
 	border: 2px solid var(--pixel-border);
@@ -474,6 +474,7 @@ body.pixel-body::before {
 	.pixel-nav {
 		flex-direction: row;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: 0.5rem;
 	}
 	.pixel-nav-button {
@@ -489,13 +490,15 @@ body.pixel-body::before {
 
 @media (max-width: 640px) {
 	body.pixel-body {
+		margin-top: 2rem;
 		font-size: 12px;
 	}
-	.pixel-logo-floating {
-		display: inline-flex;
-		position: static;
-		margin: 1rem;
+
+	.pixel-sidebar-intro {
+		width: 100%;
+		text-align: center;
 	}
+
 	.pixel-screen {
 		padding: 1rem;
 	}
