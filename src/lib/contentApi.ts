@@ -96,10 +96,14 @@ export type HomepageContent = {
 	blogs: HomepageCard[];
 };
 
+export type AboutListContent = [];
+
 const aboutCache = new Map<string, Promise<AboutContent>>();
 let cachedHomepagePromise: Promise<HomepageContent> | null = null;
+let cachedAboutsPromise: Promise<HomepageContent> | null = null;
 
 const HOMEPAGE_CACHE_FILE = resolveCacheFile('content-homepage.json');
+const ABOUT_CACHE_FILE = resolveCacheFile('content-about.json');
 
 function aboutCacheFile(slug: string) {
 	return resolveCacheFile(`content-about-${slug}.json`);
@@ -189,6 +193,10 @@ function normalizeHomepageContent(payload: ApiHomepageContent | null | undefined
 	};
 }
 
+function normalizeAboutListContent(payload: []): AboutListContent {
+	return payload;
+}
+
 function cryptoRandomId() {
 	if (typeof globalThis.crypto?.randomUUID === 'function') {
 		return globalThis.crypto.randomUUID();
@@ -272,6 +280,21 @@ export async function fetchAboutContent(slug = 'default', fetcher = globalThis.f
 	}
 
 	return structuredClone(await aboutCache.get(slug)!);
+}
+
+export async function fetchAboutListContent(slugLike = "", fetcher = globalThis.fetch) {
+	if (typeof window !== 'undefined' && !import.meta.env.SSR) {
+		throw new Error('fetchAboutContent is only available on the server.');
+	}
+
+	if (!cachedAboutsPromise) {
+		const diskContent = await readJsonFromDisk(ABOUT_CACHE_FILE, normalizeAboutListContent);
+		cachedAboutsPromise = diskContent
+			? Promise.resolve(diskContent)
+			: requestJson(`/api/v1/content/about?slug-like=${slugLike}`, normalizeAboutListContent, fetcher);
+	}
+
+	return structuredClone(await cachedAboutsPromise);
 }
 
 export async function fetchHomepageContent(fetcher = globalThis.fetch) {

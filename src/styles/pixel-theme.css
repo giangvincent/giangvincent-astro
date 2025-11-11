@@ -309,7 +309,6 @@ body.pixel-body::before {
 	background: rgba(65, 255, 156, 0.12);
 	padding: 0.25rem 0.7rem;
 	color: var(--pixel-border);
-	font-size: 0.7rem;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 }
@@ -490,8 +489,7 @@ body.pixel-body::before {
 
 @media (max-width: 640px) {
 	body.pixel-body {
-		margin-top: 2rem;
-		font-size: 12px;
+		margin-top: 3rem;
 	}
 
 	.pixel-sidebar-intro {

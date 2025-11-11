@@ -1,120 +1,175 @@
 ---
-import PixelLayout from '../components/pixel/PixelLayout.astro';
-import PixelSection from '../components/pixel/PixelSection.astro';
-import PixelCard from '../components/pixel/PixelCard.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { fetchAboutContent, fetchHomepageContent } from '../lib/contentApi';
+import PixelLayout from "../components/pixel/PixelLayout.astro";
+import PixelSection from "../components/pixel/PixelSection.astro";
+import PixelCard from "../components/pixel/PixelCard.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import {
+  fetchAboutContent,
+  fetchHomepageContent,
+  fetchAboutListContent,
+} from "../lib/contentApi";
 
-const aboutContent = await fetchAboutContent('default');
+const aboutContent = await fetchAboutContent("default");
+const aboutListContent = await fetchAboutListContent("all");
 const homepageContent = await fetchHomepageContent();
 const focusAreas = homepageContent.services.slice(0, 3);
 
 const navItems = (
-	[
-		{ id: 'about', label: 'About' },
-		focusAreas.length > 0 ? { id: 'focus', label: 'Focus' } : null,
-		{ id: 'contact', label: 'Contact' },
-	] as Array<{ id: string; label: string } | null>
+  [
+    { id: "about", label: "About" },
+    focusAreas.length > 0 ? { id: "focus", label: "Focus" } : null,
+    { id: "contact", label: "Contact" },
+  ] as Array<{ id: string; label: string } | null>
 ).filter(Boolean) as Array<{ id: string; label: string }>;
 
-const primaryCtaLabel = aboutContent.primaryCtaLabel ?? 'Contact me';
-const primaryCtaUrl = aboutContent.primaryCtaUrl ?? 'mailto:hello@giangvincent.com';
-const secondaryCtaAvailable = Boolean(aboutContent.secondaryCtaLabel && aboutContent.secondaryCtaUrl);
+const primaryCtaLabel = aboutContent.primaryCtaLabel ?? "Contact me";
+const primaryCtaUrl =
+  aboutContent.primaryCtaUrl ?? "mailto:hello@giangvincent.com";
+const secondaryCtaAvailable = Boolean(
+  aboutContent.secondaryCtaLabel && aboutContent.secondaryCtaUrl
+);
 ---
 
 <PixelLayout
-	pageTitle={`About | ${SITE_TITLE}`}
-	description={SITE_DESCRIPTION}
-	navItems={navItems}
-	sidebarIntro="Who I am, what I ship, and how to reach me."
->
-	<PixelSection
-		id="about"
-		label="Story"
-		title={aboutContent.title}
-		description={aboutContent.summary}
-	>
-		<div class="pixel-intro-grid">
-			<div class="pixel-intro-body" set:html={aboutContent.body}></div>
-			<div>
-				<div class="pixel-intro-body">
-					{
-						aboutContent.location && (
-							<p><strong>Location:</strong> {aboutContent.location}</p>
-						)
-					}
-					{
-						typeof aboutContent.yearsExperience === 'number' && (
-							<p>
-								<strong>Experience:</strong> {aboutContent.yearsExperience}+ years building digital
-								products
-							</p>
-						)
-					}
-					{
-						aboutContent.skills.length > 0 && (
-							<div>
-								<p><strong>Skills radar</strong></p>
-								<ul class="pixel-tag-list">
-									{
-										aboutContent.skills.map((skill) => (
-											<li class="pixel-tag">{skill}</li>
-										))
-									}
-								</ul>
-							</div>
-						)
-					}
-				</div>
-				<div class="pixel-card-tags" style="margin-top:1.5rem;">
-					<a class="pixel-cta" href={primaryCtaUrl}>{primaryCtaLabel}</a>
-					{
-						secondaryCtaAvailable && (
-							<a class="pixel-cta pixel-cta--ghost" href={aboutContent.secondaryCtaUrl}>
-								{aboutContent.secondaryCtaLabel}
-							</a>
-						)
-					}
-				</div>
-			</div>
-		</div>
-	</PixelSection>
+  pageTitle={`About | ${SITE_TITLE}`}
+  description={SITE_DESCRIPTION}
+  navItems={navItems}
+  sidebarIntro="Who I am, what I ship, and how to reach me.">
+  {
+    aboutListContent.length > 0 && (
+      <PixelSection
+        id="experiences"
+        label="Experiences"
+        title="My journey so far"
+        description="A snapshot of my professional background and key milestones.">
+        {aboutListContent.map((aboutContent) => (
+          <PixelSection
+            id={aboutContent.slug}
+            label={aboutContent.slug}
+            title={aboutContent.headline}
+            description={aboutContent.subheadline}>
+            <div class="pixel-intro-body" set:html={aboutContent.bio} />
+              <div>
+                <div class="pixel-intro-body">
+                  {aboutContent.location && (
+                    <p>
+                      <strong>Location:</strong> {aboutContent.location}
+                    </p>
+                  )}
+                  {typeof aboutContent.years_experience === "number" && (
+                    <p>
+                      <strong>Experience:</strong>{" "}
+                      {aboutContent.years_experience}+ years building digital
+                      products
+                    </p>
+                  )}
+                  {aboutContent.skills.length > 0 && (
+                    <div>
+                      <p>
+                        <strong>Skills radar</strong>
+                      </p>
+                      <ul class="pixel-tag-list">
+                        {aboutContent.skills.map((skill) => (
+                          <li class="pixel-tag">{skill}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
 
-	{
-		focusAreas.length > 0 && (
-			<PixelSection
-				id="focus"
-				label="Focus"
-				title="Now shipping"
-				description="A snapshot of the services I’m running most often."
-			>
-				<div class="pixel-card-grid">
-					{
-						focusAreas.map((service) => (
-							<PixelCard
-								title={service.title}
-								description={service.description}
-								href={service.href}
-								coverImageUrl={service.coverImageUrl}
-								tags={service.tags}
-							/>
-						))
-					}
-				</div>
-			</PixelSection>
-		)
-	}
+              </div>
+          </PixelSection>
+        ))}
+      </PixelSection>
+    )
+  }
+  <PixelSection
+    id="summary"
+    label="Summary"
+    title={aboutContent.title}
+    description={aboutContent.summary}>
+    <div>
+      <div class="pixel-intro-body" set:html={aboutContent.body} />
+      <div>
+        <div class="pixel-intro-body">
+          {
+            aboutContent.location && (
+              <p>
+                <strong>Location:</strong> {aboutContent.location}
+              </p>
+            )
+          }
+          {
+            typeof aboutContent.yearsExperience === "number" && (
+              <p>
+                <strong>Experience:</strong> {aboutContent.yearsExperience}+
+                years building digital products
+              </p>
+            )
+          }
+          {
+            aboutContent.skills.length > 0 && (
+              <div>
+                <p>
+                  <strong>Skills radar</strong>
+                </p>
+                <ul class="pixel-tag-list">
+                  {aboutContent.skills.map((skill) => (
+                    <li class="pixel-tag">{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+        <div class="pixel-card-tags" style="margin-top:1.5rem;">
+          <a class="pixel-cta" href={primaryCtaUrl}>{primaryCtaLabel}</a>
+          {
+            secondaryCtaAvailable && (
+              <a
+                class="pixel-cta pixel-cta--ghost"
+                href={aboutContent.secondaryCtaUrl}>
+                {aboutContent.secondaryCtaLabel}
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </PixelSection>
 
-	<PixelSection
-		id="contact"
-		label="Contact"
-		title="Let’s collaborate"
-		description="Have a roadmap, a stubborn bug, or a moonshot in mind? I’m all ears."
-	>
-		<p class="pixel-intro-body">
-			Send a note to <a href={primaryCtaUrl}>{primaryCtaUrl.replace('mailto:', '')}</a> with a short
-			brief, a timeline, and any handy context. I’ll reply within 48 hours with next steps and a plan
-			to get things moving.
-		</p>
-	</PixelSection>
+  {
+    focusAreas.length > 0 && (
+      <PixelSection
+        id="focus"
+        label="Focus"
+        title="Now shipping"
+        description="A snapshot of the services I’m running most often.">
+        <div class="pixel-card-grid">
+          {focusAreas.map((service) => (
+            <PixelCard
+              title={service.title}
+              description={service.description}
+              href={service.href}
+              coverImageUrl={service.coverImageUrl}
+              tags={service.tags}
+            />
+          ))}
+        </div>
+      </PixelSection>
+    )
+  }
+
+  <PixelSection
+    id="contact"
+    label="Contact"
+    title="Let’s collaborate"
+    description="Have a roadmap, a stubborn bug, or a moonshot in mind? I’m all ears.">
+    <p class="pixel-intro-body">
+      Send a note to <a href={primaryCtaUrl}
+        >{primaryCtaUrl.replace("mailto:", "")}</a
+      > with a short brief, a timeline, and any handy context. I’ll reply within
+      48 hours with next steps and a plan to get things moving.
+    </p>
+  </PixelSection>
 </PixelLayout>

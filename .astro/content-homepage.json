@@ -1,16 +1,24 @@
 {
   "about": {
     "slug": "default",
-    "headline": "About me",
-    "subheadline": null,
-    "bio": "<p>This is me</p>",
-    "location": null,
+    "headline": "Senior Full-Stack Developer (PHP / JavaScript) ",
+    "subheadline": "6+ Years Experience | Freelance & Remote Friendly",
+    "bio": "<p>Hi everyone — I’m <strong>Giang (Vincent)</strong>, a <strong>Senior Full-Stack Developer</strong> with over <strong>6 years of experience</strong> building scalable, secure, and high-performance web applications for global clients.</p><p>💻 <strong>What I Do</strong><br>I specialize in <strong>end-to-end web development</strong>, delivering clean architecture, efficient APIs, and polished user interfaces. I bring strong experience in <strong>e-commerce</strong>, <strong>SaaS</strong>, and <strong>enterprise systems</strong> — with a focus on performance, maintainability, and UX.</p><p>🧠 <strong>Key Skills / Tech Stack</strong><br><strong>Languages &amp; Frameworks:</strong> PHP, Laravel, Symfony, JavaScript (ES6+), Vue.js, React.js<br><strong>E-commerce Expertise:</strong> Shopware 5 &amp; 6 (custom plugins, themes, integrations)<br><strong>Databases:</strong> MySQL, SQL, PostgreSQL<br><strong>Infrastructure:</strong> Google App Engine, AWS, Serverless architecture<br><strong>Frontend Tools:</strong> HTML5, CSS3, SASS, Webpack<br><strong>Practices:</strong> REST API design, clean architecture, CI/CD pipelines, agile collaboration</p><p>🚀 <strong>Looking For</strong><br>Freelance or part-time opportunities to design and deliver <strong>modern, maintainable systems</strong>, particularly in <strong>e-commerce</strong> or <strong>web-based platforms</strong>. I love solving technical challenges and collaborating in diverse, remote-first teams.</p><p>🏆 <strong>Career Highlights</strong></p><ul><li><p>Delivered multiple <strong>Shopware 6 custom plugins</strong> for international retailers, improving checkout UX and performance.</p></li><li><p>Migrated <strong>legacy Laravel projects</strong> to modern architecture with containerization and CI/CD pipelines.</p></li><li><p>Designed multi-tenant SaaS features integrating <strong>secure APIs</strong> and <strong>serverless components</strong> on AWS and GCP.</p></li><li><p>Improved team workflows with <strong>automated testing and deployment pipelines</strong>, boosting release confidence and speed.</p></li></ul><p>🕓 <strong>Availability</strong><br>Open for new freelance projects | Remote (UTC+7)</p>",
+    "location": "Da Nang, Viet Nam",
     "years_experience": 6,
     "primary_cta_label": "Contact me",
     "primary_cta_url": "mailto:giang.dlinh@gmail.com",
     "secondary_cta_label": null,
     "secondary_cta_url": null,
-    "skills": [],
+    "skills": [
+      "PHP",
+      "Javascript",
+      "Vue.js",
+      "Symfony",
+      "Laravel",
+      "Html & CSS",
+      "Shopware 6"
+    ],
     "avatar_url": null,
     "meta": []
   },
