@@ -40,13 +40,6 @@ const navItems = [
 		<div class="pixel-intro-grid">
 			<div>
 				<p class="pixel-intro-body">{summary}</p>
-				{service.meta.length > 0 && (
-					<ul class="pixel-tag-list">
-						{service.meta.map((item) => (
-							<li class="pixel-tag">{item}</li>
-						))}
-					</ul>
-				)}
 			</div>
 			{
 				service.coverImageUrl && (

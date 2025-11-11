@@ -11,7 +11,6 @@ type ApiService = {
 	cover_image_url?: string | null;
 	is_featured?: boolean;
 	sort_order?: number | null;
-	meta?: unknown[] | Record<string, unknown> | null;
 };
 
 export type Service = {
@@ -23,7 +22,6 @@ export type Service = {
 	coverImageUrl?: string;
 	isFeatured: boolean;
 	sortOrder: number;
-	meta: string[];
 };
 
 const SERVICES_ENDPOINT = '/api/v1/services';

@@ -237,7 +237,7 @@ body.pixel-body::before {
 
 .pixel-card-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	grid-template-columns: 1fr 1fr;
 	gap: 1rem;
 }
 
@@ -364,7 +364,6 @@ body.pixel-body::before {
 	margin-bottom: 0.25rem;
 	color: var(--pixel-text-primary);
 	font-weight: 600;
-	font-size: 0.75rem;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 }
@@ -381,7 +380,6 @@ body.pixel-body::before {
 
 .pixel-panel .pixel-article-body {
 	color: var(--pixel-text-muted);
-	font-size: 0.95rem;
 	line-height: 1.8;
 }
 
@@ -480,7 +478,7 @@ body.pixel-body::before {
 		border-radius: 999px;
 	}
 	.pixel-card-grid {
-		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		grid-template-columns: 1fr 1fr;
 	}
 	.pixel-card-cover {
 		height: 120px;
@@ -499,6 +497,9 @@ body.pixel-body::before {
 
 	.pixel-screen {
 		padding: 1rem;
+	}
+	.pixel-card-grid {
+		grid-template-columns: 1fr;
 	}
 	.pixel-card-cover {
 		height: 110px;
