@@ -1,0 +1,77 @@
+---
+import PixelLayout from '../../components/pixel/PixelLayout.astro';
+import PixelSection from '../../components/pixel/PixelSection.astro';
+import PixelCard from '../../components/pixel/PixelCard.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { fetchHomepageContent } from '../../lib/contentApi';
+
+const homepageContent = await fetchHomepageContent();
+const services = homepageContent.services;
+const featured = services.filter((service) => service.isFeatured);
+
+const navItems = (
+	[
+		featured.length > 0 ? { id: 'featured-services', label: 'Featured' } : null,
+		{ id: 'services-catalog', label: 'Catalog' },
+	] as Array<{ id: string; label: string } | null>
+).filter(Boolean) as Array<{ id: string; label: string }>;
+---
+
+<PixelLayout
+	pageTitle={`Services | ${SITE_TITLE}`}
+	description={SITE_DESCRIPTION}
+	navItems={navItems}
+	sidebarIntro="Pick a capability or browse the entire service catalog."
+>
+	{
+		featured.length > 0 && (
+			<PixelSection
+				id="featured-services"
+				label="Capabilities"
+				title="Featured services"
+				description="What I’m shipping most often right now."
+			>
+				<div class="pixel-card-grid">
+			{
+				featured.map((service) => (
+					<PixelCard
+						title={service.title}
+						description={service.description}
+						href={service.href}
+						coverImageUrl={service.coverImageUrl}
+						tags={service.tags}
+					/>
+				))
+			}
+				</div>
+			</PixelSection>
+		)
+	}
+
+	<PixelSection
+		id="services-catalog"
+		label="Catalog"
+		title="All services"
+		description="From product direction to platform builds—pick what you need."
+	>
+		{
+			services.length > 0 ? (
+				<div class="pixel-card-grid">
+					{
+						services.map((service) => (
+							<PixelCard
+								title={service.title}
+								description={service.description}
+								href={service.href}
+								coverImageUrl={service.coverImageUrl}
+								tags={service.tags}
+							/>
+						))
+					}
+				</div>
+			) : (
+				<div class="pixel-empty-state">No services published yet. Ping me for bespoke work.</div>
+			)
+		}
+	</PixelSection>
+</PixelLayout>

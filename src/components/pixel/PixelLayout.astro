@@ -1,0 +1,99 @@
+---
+import BaseHead from '../BaseHead.astro';
+import Footer from '../Footer.astro';
+import '../../styles/pixel-theme.css';
+
+type NavItem = {
+	id: string;
+	label: string;
+};
+
+interface Props {
+	pageTitle: string;
+	description?: string;
+	navItems?: NavItem[];
+	logoText?: string;
+	sidebarIntro?: string;
+}
+
+const {
+	pageTitle,
+	description = pageTitle,
+	navItems = [],
+	logoText = 'GV',
+	sidebarIntro,
+} = Astro.props;
+
+const hasNav = navItems.length > 0;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={pageTitle} description={description} />
+	</head>
+	<body class="pixel-body">
+		<div class="pixel-logo-floating">{logoText}</div>
+		<div class={`pixel-screen${hasNav ? '' : ' pixel-screen--full'}`}>
+			{hasNav && (
+				<aside class="pixel-sidebar">
+					{sidebarIntro && <p class="pixel-sidebar-intro">{sidebarIntro}</p>}
+					<nav class="pixel-nav">
+						{
+							navItems.map((item, index) => (
+								<button
+									class={`pixel-nav-button${index === 0 ? ' is-active' : ''}`}
+									data-target={item.id}
+								>
+									{item.label}
+								</button>
+							))
+						}
+					</nav>
+				</aside>
+			)}
+			<main class="pixel-dashboard">
+				<slot />
+			</main>
+		</div>
+		<Footer />
+		<script type="module">
+			const navButtons = document.querySelectorAll('.pixel-nav-button');
+			const panels = document.querySelectorAll('.pixel-panel');
+
+			function setActive(targetId) {
+				navButtons.forEach((button) => {
+					button.classList.toggle('is-active', button.dataset.target === targetId);
+				});
+			}
+
+			if (navButtons.length && panels.length) {
+				navButtons.forEach((button) => {
+					button.addEventListener('click', (event) => {
+						event.preventDefault();
+						const targetId = button.dataset.target;
+						const panel = document.getElementById(targetId);
+						if (panel) {
+							panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+							setActive(targetId);
+						}
+					});
+				});
+
+				const observer = new IntersectionObserver(
+					(entries) => {
+						const visible = entries
+							.filter((entry) => entry.isIntersecting)
+							.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+						if (visible?.target?.id) {
+							setActive(visible.target.id);
+						}
+					},
+					{ threshold: 0.4 },
+				);
+
+				panels.forEach((panel) => observer.observe(panel));
+			}
+		</script>
+	</body>
+</html>

@@ -1,225 +1,77 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
+import PixelLayout from '../../components/pixel/PixelLayout.astro';
+import PixelSection from '../../components/pixel/PixelSection.astro';
+import PixelCard from '../../components/pixel/PixelCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { fetchPortfolioProjects, sortProjectsForListing } from '../../lib/portfolioApi';
 
 const projects = sortProjectsForListing(await fetchPortfolioProjects());
-const featuredProjects = projects.filter((project) => project.isFeatured);
-const nonFeaturedProjects = projects.filter((project) => !project.isFeatured);
-const showcaseProjects = nonFeaturedProjects.length > 0 ? nonFeaturedProjects : projects;
+const featured = projects.filter((project) => project.isFeatured);
+const others = projects.filter((project) => !project.isFeatured);
+
+const navItems = (
+	[
+		featured.length > 0 ? { id: 'featured', label: 'Featured' } : null,
+		{ id: 'all-projects', label: 'All Projects' },
+	] as Array<{ id: string; label: string } | null>
+).filter(Boolean) as Array<{ id: string; label: string }>;
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={`Portfolio | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: min(1200px, 100%);
-				margin: auto;
-				padding: 2rem 1rem 4rem;
-			}
-			h1 {
-				margin-bottom: 0.25rem;
-				font-size: clamp(2rem, 3vw, 3rem);
-			}
-			p.page-summary {
-				margin-top: 0;
-				color: rgb(var(--gray-dark));
-			}
-			section {
-				margin-top: 3rem;
-			}
-			section:first-of-type {
-				margin-top: 1rem;
-			}
-			.section-heading {
-				display: flex;
-				align-items: baseline;
-				gap: 1rem;
-				margin-bottom: 1rem;
-			}
-			.section-heading h2 {
-				margin: 0;
-				font-size: 1.5rem;
-			}
-			.section-heading span {
-				color: rgb(var(--gray));
-				font-size: 0.9rem;
-			}
-			.projects-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-				gap: 1.5rem;
-				list-style: none;
-				margin: 0;
-				padding: 0;
-			}
-			.card {
-				border-radius: 16px;
-				border: 1px solid rgb(var(--gray-light));
-				overflow: hidden;
-				background: #fff;
-				display: flex;
-				flex-direction: column;
-				box-shadow: var(--box-shadow);
-			}
-			.card a {
-				display: flex;
-				flex-direction: column;
-				height: 100%;
-				text-decoration: none;
-				color: inherit;
-			}
-			.card a:focus,
-			.card a:hover {
-				box-shadow: var(--box-shadow);
-			}
-			.card-thumbnail {
-				width: 100%;
-				height: 220px;
-				object-fit: cover;
-			}
-			.card-body {
-				padding: 1.5rem;
-				display: flex;
-				flex-direction: column;
-				gap: 0.75rem;
-				flex: 1;
-			}
-			.card h3 {
-				margin: 0;
-			}
-			.card .tagline {
-				margin: 0;
-				color: rgb(var(--gray));
-				font-size: 0.95rem;
-			}
-			.card .summary {
-				margin: 0;
-				color: rgb(var(--gray-dark));
-				flex: 1;
-			}
-			.tags {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.5rem;
-				list-style: none;
-				margin: 0;
-				padding: 0;
-			}
-			.tags li {
-				background: rgba(var(--accent), 0.12);
-				color: rgb(var(--accent));
-				padding: 0.25rem 0.75rem;
-				border-radius: 999px;
-				font-size: 0.85rem;
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				gap: 0.35rem;
-				font-size: 0.85rem;
-				font-weight: 600;
-				color: rgb(var(--accent));
-				text-transform: uppercase;
-				letter-spacing: 0.08em;
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<header>
-				<h1>Selected work</h1>
-				<p class="page-summary">
-					A collection of products, experiments, and collaborations I've had the pleasure to build.
-				</p>
-			</header>
-
-			{featuredProjects.length > 0 && (
-				<section>
-					<div class="section-heading">
-						<h2>Featured</h2>
-						<span>Highlights from recent launches</span>
-					</div>
-					<ul class="projects-grid">
-						{
-							featuredProjects.map((project) => (
-								<li class="card">
-									<a href={`/portfolio/${project.slug}/`}>
-										{project.thumbnailUrl && (
-											<img
-												class="card-thumbnail"
-												src={project.thumbnailUrl}
-												alt={project.title}
-												loading="lazy"
-											/>
-										)}
-										<div class="card-body">
-											<span class="badge">Featured</span>
-											<p class="tagline">{project.tagline}</p>
-											<h3>{project.title}</h3>
-											<p class="summary">{project.summary}</p>
-											{project.tags.length > 0 && (
-												<ul class="tags">
-													{
-														project.tags.map((tag) => (
-															<li>{tag}</li>
-														))
-													}
-												</ul>
-											)}
-										</div>
-									</a>
-								</li>
-							))
-						}
-					</ul>
-				</section>
-			)}
-
-			<section>
-				<div class="section-heading">
-					<h2>All projects</h2>
-					<span>{showcaseProjects.length} case studies</span>
-				</div>
-				<ul class="projects-grid">
+<PixelLayout
+	pageTitle={`Portfolio | ${SITE_TITLE}`}
+	description={SITE_DESCRIPTION}
+	navItems={navItems}
+	sidebarIntro="Browse featured case studies or jump straight into the full index."
+>
+	{
+		featured.length > 0 && (
+			<PixelSection
+				id="featured"
+				label="Spotlight"
+				title="Featured launches"
+				description="A handful of flagship builds leading the roadmap."
+			>
+				<div class="pixel-card-grid">
 					{
-						showcaseProjects.map((project) => (
-							<li class="card">
-								<a href={`/portfolio/${project.slug}/`}>
-									{project.thumbnailUrl && (
-										<img
-											class="card-thumbnail"
-											src={project.thumbnailUrl}
-											alt={project.title}
-											loading="lazy"
-										/>
-									)}
-									<div class="card-body">
-										<p class="tagline">{project.tagline}</p>
-										<h3>{project.title}</h3>
-										<p class="summary">{project.summary}</p>
-										{project.tags.length > 0 && (
-											<ul class="tags">
-												{
-													project.tags.map((tag) => (
-														<li>{tag}</li>
-													))
-												}
-											</ul>
-										)}
-									</div>
-								</a>
-							</li>
+						featured.map((project) => (
+							<PixelCard
+								title={project.title}
+								description={project.summary}
+								href={`/portfolio/${project.slug}/`}
+								coverImageUrl={project.thumbnailUrl ?? project.heroImageUrl}
+								tags={project.tags}
+							/>
 						))
 					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+				</div>
+			</PixelSection>
+		)
+	}
+
+	<PixelSection
+		id="all-projects"
+		label="Archive"
+		title="All projects"
+		description="Every build, experiment, and shipping log."
+	>
+		<div class="pixel-card-grid">
+			{
+				others.length > 0 ? (
+					others.map((project) => (
+						<PixelCard
+							title={project.title}
+							description={project.summary}
+							href={`/portfolio/${project.slug}/`}
+							coverImageUrl={project.thumbnailUrl ?? project.heroImageUrl}
+							tags={project.tags}
+						/>
+					))
+				) : (
+					<div class="pixel-empty-state">
+						No additional projects yet. Featured work will spill over here soon.
+					</div>
+				)
+			}
+		</div>
+	</PixelSection>
+</PixelLayout>

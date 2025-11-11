@@ -1,8 +1,8 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
+import PixelLayout from '../../components/pixel/PixelLayout.astro';
+import PixelSection from '../../components/pixel/PixelSection.astro';
+import '../../styles/pixel-theme.css';
 import { fetchPortfolioProjects, type PortfolioProject } from '../../lib/portfolioApi';
 
 export async function getStaticPaths() {
@@ -18,153 +18,77 @@ type Props = {
 };
 
 const { project } = Astro.props as Props;
-const pageDescription = project.summary || project.tagline || project.title;
+
+const navItems = [
+	{ id: 'overview', label: 'Overview' },
+	{ id: 'case-study', label: 'Case Study' },
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={`${project.title} | Case Study`} description={pageDescription} />
-		<style>
-			main {
-				width: min(960px, 100%);
-				margin: auto;
-				padding: 2rem 1rem 4rem;
+<PixelLayout
+	pageTitle={`${project.title} | Portfolio`}
+	description={project.summary || project.tagline || project.title}
+	navItems={navItems}
+	sidebarIntro="Explore the overview or jump straight into the build log."
+>
+	<PixelSection
+		id="overview"
+		label="Mission Brief"
+		title={project.title}
+		description={project.tagline}
+	>
+		<div class="pixel-hero">
+			{
+				project.heroImageUrl && (
+					<img src={project.heroImageUrl} alt={project.title} loading="lazy" width="1280" height="640" />
+				)
 			}
-			.hero {
-				text-align: center;
-				margin-bottom: 2rem;
-			}
-			.hero img {
-				width: 100%;
-				max-height: 420px;
-				object-fit: cover;
-				border-radius: 18px;
-			}
-			.hero h1 {
-				margin-top: 1.5rem;
-			}
-			.tagline {
-				color: rgb(var(--gray));
-				margin: 0.5rem 0 1rem;
-			}
-			.meta {
-				display: flex;
-				gap: 2rem;
-				flex-wrap: wrap;
-				justify-content: center;
-				color: rgb(var(--gray));
-			}
-			.meta dt {
-				font-weight: 600;
-				text-transform: uppercase;
-				letter-spacing: 0.08em;
-				font-size: 0.75rem;
-			}
-			.meta dd {
-				margin: 0;
-				font-size: 0.95rem;
-			}
-			.actions {
-				margin-top: 1rem;
-				display: flex;
-				gap: 1rem;
-				justify-content: center;
-				flex-wrap: wrap;
-			}
-			.actions a {
-				padding: 0.75rem 1.5rem;
-				border-radius: 999px;
-				text-decoration: none;
-				font-weight: 600;
-				color: #fff;
-				background: rgb(var(--accent));
-			}
-			.actions a.secondary {
-				background: transparent;
-				color: rgb(var(--accent));
-				border: 1px solid rgba(var(--accent), 0.4);
-			}
-			.tags {
-				margin: 2rem 0;
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.5rem;
-				justify-content: center;
-				list-style: none;
-				padding: 0;
-			}
-			.tags li {
-				background: rgba(var(--gray-light), 0.8);
-				border-radius: 999px;
-				padding: 0.35rem 0.9rem;
-				font-size: 0.9rem;
-			}
-			.case-study {
-				background: #fff;
-				border-radius: 20px;
-				padding: 2rem;
-				box-shadow: var(--box-shadow);
-			}
-			.case-study p {
-				color: rgb(var(--gray-dark));
-			}
-			@media (max-width: 640px) {
-				.case-study {
-					padding: 1.5rem;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="hero">
-				{project.heroImageUrl && (
-					<img src={project.heroImageUrl} alt={project.title} loading="lazy" />
-				)}
-				<h1>{project.title}</h1>
-				<p class="tagline">{project.tagline}</p>
-				<dl class="meta">
-					<div>
-						<dt>Launched</dt>
-						<dd>
-							<FormattedDate date={project.publishedAt} />
-						</dd>
-					</div>
-					{project.projectUrl && (
-						<div>
-							<dt>Live URL</dt>
-							<dd>{project.projectUrl.replace(/^https?:\/\//, '')}</dd>
-						</div>
-					)}
-				</dl>
-				<div class="actions">
-					{
-						project.projectUrl && (
-							<a href={project.projectUrl} target="_blank" rel="noreferrer">Visit project</a>
-						)
-					}
-					{
-						project.sourceUrl && (
-							<a class="secondary" href={project.sourceUrl} target="_blank" rel="noreferrer">
-								View source
-							</a>
-						)
-					}
+			<div class="pixel-meta-grid">
+				<div>
+					<div class="pixel-meta-title">Launched</div>
+					<FormattedDate date={project.publishedAt} />
 				</div>
-				{project.tags.length > 0 && (
-					<ul class="tags">
+				{
+					project.projectUrl && (
+						<div>
+							<div class="pixel-meta-title">Live URL</div>
+							<a class="pixel-cta" href={project.projectUrl} target="_blank" rel="noreferrer">
+								Visit Project
+							</a>
+						</div>
+					)
+				}
+				{
+					project.sourceUrl && (
+						<div>
+							<div class="pixel-meta-title">Source</div>
+							<a class="pixel-cta" href={project.sourceUrl} target="_blank" rel="noreferrer">
+								View Source
+							</a>
+						</div>
+					)
+				}
+			</div>
+			{
+				project.tags.length > 0 && (
+					<ul class="pixel-tag-list">
 						{
 							project.tags.map((tag) => (
-								<li>{tag}</li>
+								<li class="pixel-tag">{tag}</li>
 							))
 						}
 					</ul>
-				)}
-			</section>
-			<section class="case-study" set:html={project.body}></section>
-		</main>
-		<Footer />
-	</body>
-</html>
+				)
+			}
+		</div>
+	</PixelSection>
+
+	<PixelSection
+		id="case-study"
+		label="Build Log"
+		title="Case study"
+		description="Notes from the trenches—goals, obstacles, and shipping moments."
+	>
+		<div class="pixel-article-body" set:html={project.body}></div>
+	</PixelSection>
+</PixelLayout>

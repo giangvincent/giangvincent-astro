@@ -1,0 +1,39 @@
+---
+interface Props {
+	id: string;
+	label?: string;
+	title?: string;
+	description?: string;
+	footerHref?: string;
+	footerLabel?: string;
+}
+
+const {
+	id,
+	label,
+	title,
+	description,
+	footerHref,
+	footerLabel = 'See more',
+} = Astro.props;
+---
+
+<section id={id} class="pixel-panel">
+	{label && <p class="pixel-panel-label">{label}</p>}
+	{
+		(title || description) && (
+			<div class="pixel-section-header">
+				{title && <h2>{title}</h2>}
+				{description && <p>{description}</p>}
+			</div>
+		)
+	}
+	<slot />
+	{
+		footerHref && (
+			<div class="pixel-grid-footer">
+				<a class="pixel-cta" href={footerHref}>{footerLabel}</a>
+			</div>
+		)
+	}
+</section>

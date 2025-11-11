@@ -1,0 +1,48 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+	href?: string;
+	coverImageUrl?: string;
+	tags?: string[];
+}
+
+const { title, description, href, coverImageUrl, tags = [] } = Astro.props;
+
+---
+
+{href ? (
+	<a class="pixel-card" href={href}>
+		{coverImageUrl && <img class="pixel-card-cover" src={coverImageUrl} alt={title} loading="lazy" />}
+		<h3>{title}</h3>
+		{description && <p>{description}</p>}
+		{
+			tags.length > 0 && (
+				<ul class="pixel-card-tags">
+					{
+						tags.map((tag) => (
+							<li class="pixel-tag">{tag}</li>
+						))
+					}
+				</ul>
+			)
+		}
+	</a>
+) : (
+	<div class="pixel-card pixel-card--static">
+		{coverImageUrl && <img class="pixel-card-cover" src={coverImageUrl} alt={title} loading="lazy" />}
+		<h3>{title}</h3>
+		{description && <p>{description}</p>}
+		{
+			tags.length > 0 && (
+				<ul class="pixel-card-tags">
+					{
+						tags.map((tag) => (
+							<li class="pixel-tag">{tag}</li>
+						))
+					}
+				</ul>
+			)
+		}
+	</div>
+)}
