@@ -13,7 +13,7 @@
 body.pixel-body {
 	position: relative;
 	margin: 0;
-	background: radial-gradient(circle at top, var(--pixel-bg-glow), var(--pixel-bg-deep) 65%);
+	/* background: radial-gradient(circle at top, var(--pixel-bg-glow), var(--pixel-bg-deep) 65%); */
 	min-height: 100vh;
 	color: var(--pixel-text-primary);
 }
@@ -94,8 +94,7 @@ body.pixel-body::before {
 
 .pixel-sidebar-intro {
 	margin: 0;
-	color: var(--pixel-text-muted);
-	line-height: 1.6;
+	color: var(--accent-dark);
 }
 
 .pixel-nav {
@@ -111,7 +110,7 @@ body.pixel-body::before {
 	border: 2px solid transparent;
 	background: transparent;
 	padding: 0.75rem 1rem;
-	color: var(--pixel-text-primary);
+	/* color: var(--pixel-text-primary); */
 	font-family: "Press Start 2P", sans-serif;
 	letter-spacing: 0.1em;
 	text-align: left;
@@ -191,6 +190,7 @@ body.pixel-body::before {
 .pixel-section-header h2 {
 	margin: 0;
 	font-size: clamp(1.4rem, 2vw, 1.8rem);
+	line-height: 2;
 }
 
 .pixel-section-header p {
@@ -202,11 +202,6 @@ body.pixel-body::before {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	gap: 2rem;
-}
-
-.pixel-intro-body {
-	color: var(--pixel-text-muted);
-	line-height: 1.6;
 }
 
 .pixel-intro-body :where(p, ul, ol) {
@@ -286,13 +281,13 @@ body.pixel-body::before {
 
 .pixel-card h3 {
 	margin: 0;
+	color: var(--pixel-border);
 	font-size: 1rem;
+	line-height: 1.6;
 }
 
 .pixel-card p {
 	margin: 0;
-	color: var(--pixel-text-muted);
-	line-height: 1.5;
 }
 
 .pixel-card-tags {
@@ -309,6 +304,7 @@ body.pixel-body::before {
 	background: rgba(65, 255, 156, 0.12);
 	padding: 0.25rem 0.7rem;
 	color: var(--pixel-border);
+	font-size: 0.75rem;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 }
@@ -376,11 +372,6 @@ body.pixel-body::before {
 	margin: 1.5rem 0 0;
 	padding: 0;
 	list-style: none;
-}
-
-.pixel-panel .pixel-article-body {
-	color: var(--pixel-text-muted);
-	line-height: 1.8;
 }
 
 .pixel-panel .pixel-article-body :where(p, ul, ol, blockquote) {

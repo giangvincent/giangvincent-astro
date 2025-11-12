@@ -19,16 +19,16 @@
 @font-face {
 	font-style: normal;
 	font-weight: 400;
-	src: url("/fonts/VT323-Regular.ttf") format("truetype");
-	font-family: "VT323";
+	src: url("/fonts/PixelOperator8.ttf") format("truetype");
+	font-family: "PixelOperator8";
 	font-display: swap;
 }
 
 @font-face {
 	font-style: normal;
-	font-weight: 600;
-	src: url("/fonts/VT323-Regular.ttf") format("truetype");
-	font-family: "VT323";
+	font-weight: 700;
+	src: url("/fonts/PixelOperator8-Bold.ttf") format("truetype");
+	font-family: "PixelOperator8";
 	font-display: swap;
 }
 
@@ -44,12 +44,12 @@ body {
 	background: linear-gradient(var(--gray-gradient)) no-repeat;
 	background-size: 100% 600px;
 	padding: 0;
-	font-family: "VT323", sans-serif;
+	font-family: "PixelOperator8", sans-serif;
 	text-align: left;
 	word-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
+	font-size: 12px;
+	line-height: 2;
 	overflow-wrap: break-word;
 }
 main {
@@ -92,7 +92,7 @@ a {
 	color: var(--pixel-border);
 }
 a:hover {
-	color: var(--pixel-border-soft);
+	color: var(--pixel-text-primary);
 }
 p {
 	margin-bottom: 1em;
