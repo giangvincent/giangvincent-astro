@@ -479,6 +479,7 @@ body.pixel-body::before {
 @media (max-width: 640px) {
 	body.pixel-body {
 		margin-top: 3rem;
+
 	}
 
 	.pixel-sidebar-intro {
@@ -494,5 +495,14 @@ body.pixel-body::before {
 	}
 	.pixel-card-cover {
 		height: 110px;
+	}
+
+	.pixel-section-header h2 {
+		font-size: clamp(1.2rem, 2vw, 1.8rem);
+	}
+
+	.pixel-footer__links {
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 }
