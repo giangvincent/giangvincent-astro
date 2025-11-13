@@ -16,8 +16,9 @@ const focusAreas = homepageContent.services.slice(0, 3);
 
 const navItems = (
   [
-    { id: "about", label: "About" },
+    { id: "experiences", label: "Experiences" },
     focusAreas.length > 0 ? { id: "focus", label: "Focus" } : null,
+    { id: "summary", label: "Summary" },
     { id: "contact", label: "Contact" },
   ] as Array<{ id: string; label: string } | null>
 ).filter(Boolean) as Array<{ id: string; label: string }>;

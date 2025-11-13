@@ -1,14 +1,22 @@
 :root {
-	--pixel-bg-deep: #040206;
-	--pixel-bg-glow: #0b1220;
-	--pixel-grid-line: rgba(255, 255, 255, 0.08);
-	--pixel-border: #41ff9c;
-	--pixel-border-soft: rgba(65, 255, 156, 0.25);
-	--pixel-shadow: rgba(65, 255, 156, 0.35);
-	--pixel-text-primary: #e9f7ff;
-	--pixel-text-muted: #9fb2d2;
-	--pixel-card-bg: rgba(7, 12, 25, 0.92);
+  /* Backgrounds */
+  --pixel-bg-deep: #02030A;           /* Ultra-deep night blue */
+  --pixel-bg-glow: #0A1430;           /* Richer glow backdrop */
+
+  /* Lines & Borders */
+  --pixel-grid-line: rgba(255, 255, 255, 0.06);
+  --pixel-border: #2CFFD7;            /* Brighter neon aqua */
+  --pixel-border-soft: rgba(44, 255, 215, 0.25);
+  --pixel-shadow: rgba(44, 255, 215, 0.40);
+
+  /* Text */
+  --pixel-text-primary: #E8FBFF;      /* Frost white */
+  --pixel-text-muted: #7DA4C8;        /* Cooler dusty blue */
+
+  /* Cards / Surfaces */
+  --pixel-card-bg: rgba(6, 12, 28, 0.94);  /* Slightly brighter, more readable */
 }
+
 
 body.pixel-body {
 	position: relative;
@@ -111,7 +119,7 @@ body.pixel-body::before {
 	background: transparent;
 	padding: 0.75rem 1rem;
 	/* color: var(--pixel-text-primary); */
-	font-family: "Press Start 2P", sans-serif;
+	font-family: "IBM VGA", sans-serif;
 	letter-spacing: 0.1em;
 	text-align: left;
 	text-transform: uppercase;
@@ -131,8 +139,9 @@ body.pixel-body::before {
 
 .pixel-nav-button.is-active {
 	transform: translateX(6px);
-	border-color: var(--pixel-border);
-	color: var(--pixel-border);
+    box-shadow: 0 0 8px var(--pixel-bg-glow);
+    border-color: var(--pixel-bg-glow);
+    color: var(--pixel-bg-glow);
 }
 
 .pixel-dashboard {
@@ -190,7 +199,6 @@ body.pixel-body::before {
 .pixel-section-header h2 {
 	margin: 0;
 	font-size: clamp(1.4rem, 2vw, 1.8rem);
-	line-height: 2;
 }
 
 .pixel-section-header p {
@@ -282,8 +290,6 @@ body.pixel-body::before {
 .pixel-card h3 {
 	margin: 0;
 	color: var(--pixel-border);
-	font-size: 1rem;
-	line-height: 1.6;
 }
 
 .pixel-card p {
@@ -367,7 +373,6 @@ body.pixel-body::before {
 .pixel-tag-list {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
 	gap: 0.5rem;
 	margin: 1.5rem 0 0;
 	padding: 0;
@@ -506,3 +511,120 @@ body.pixel-body::before {
 		justify-content: center;
 	}
 }
+
+
+/* Pixel Table Base */
+table {
+  box-shadow: 0 0 6px var(--pixel-shadow);
+  border: 2px solid var(--pixel-border-soft);
+  border-collapse: collapse;
+  background: var(--pixel-card-bg);
+  width: 100%;
+  color: var(--pixel-text-primary);
+  font-size: 14px;
+  font-family: 'PixelOperator', monospace;
+}
+
+/* Table Head */
+table thead th, table tr th {
+  position: relative;
+  border-bottom: 2px solid var(--pixel-border);
+  background: var(--pixel-bg-glow);
+  padding: 12px 8px;
+  color: var(--pixel-text-primary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Pixel Borders Between Columns */
+table th,
+table td {
+  border-right: 1px solid var(--pixel-grid-line);
+}
+
+table th:last-child,
+table td:last-child {
+  border-right: none;
+}
+
+/* Table Body */
+table tbody tr {
+  transition: background 0.15s;
+}
+
+table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Hover Effect with Neon Glow */
+table tbody tr:hover {
+  box-shadow: inset 0 0 4px var(--pixel-shadow);
+  background: rgba(44, 255, 215, 0.08);
+}
+
+/* Table Cells */
+table td {
+  vertical-align: top;
+  padding: 10px 8px;
+  color: var(--pixel-text-muted);
+}
+
+/* Pixel Corner Style */
+table,
+table th,
+table td {
+  border-radius: 0; /* pixel sharp corners */
+}
+
+/* Optional: Pixel Glow Divider */
+table thead::after {
+  display: block;
+  box-shadow: 0 0 6px var(--pixel-shadow);
+  background: var(--pixel-border-soft);
+  height: 1px;
+  content: "";
+}
+
+@media (max-width: 768px) {
+  /* Table becomes the scroll container */
+  table {
+    display: block;                 /* allows overflow to work */
+    width: 100%;
+    overflow-x: auto;               /* horizontal scroll on small screens */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Inner content (thead + tbody) get a minimum width
+     so they can overflow the table and trigger the scroll */
+  table thead,
+  table tbody {
+    display: table;
+    width: 100%;
+    min-width: 480px;               /* tune this based on your columns */
+    table-layout: fixed;            /* keeps column widths stable */
+  }
+
+  /* Rows behave like rows inside the inner table */
+  table tr {
+    display: table-row;
+  }
+
+  /* Cells keep pixel look but slightly tighter padding */
+  table thead th,
+  table td {
+    padding: 8px 6px;
+  }
+
+  /* Sticky header (optional but nice) */
+  table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  table thead th {
+    position: sticky;               /* keeps each header cell aligned */
+    top: 0;
+  }
+}
+

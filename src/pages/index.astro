@@ -27,12 +27,30 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
   sidebarIntro="Navigate the console to jump between the latest transmissions.">
   <PixelSection id="intro" label="Intro" title={aboutContent.title}>
     <div class="pixel-intro-grid">
-      <div class="pixel-intro-body" set:html={aboutContent.body} />
+      <div class="pixel-intro-body">
+        <div set:html={aboutContent.body}></div>
+        {
+          aboutContent.skills.length > 0 && (
+            <div>
+              <p>
+                <strong>Skills radar</strong>
+              </p>
+              <ul class="pixel-tag-list">
+                {aboutContent.skills.map((skill) => (
+                  <li class="pixel-tag">{skill}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
     </div>
-    <div class="pixel-intro-grid">
-      <p class="pixel-intro-body">{aboutContent.summary}</p>
+    <div class="pixel-card-tags" style="margin-top:1.5rem;">
+      <a class="pixel-cta" href={aboutContent.primaryCtaUrl}>
+        {aboutContent.primaryCtaLabel}
+      </a>
+      <a class="pixel-cta" href="/about">More details</a>
     </div>
-    <a class="pixel-cta" href="/about">More details</a>
   </PixelSection>
 
   <PixelSection
