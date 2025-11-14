@@ -67,6 +67,7 @@ body.pixel-body::before {
 	background: #02030a;
 	padding: 0.65rem 1rem;
 	color: var(--pixel-border);
+	font-family: "IBM VGA", sans-serif;
 	letter-spacing: 0.2em;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -118,11 +119,17 @@ body.pixel-body::before {
 	border: 2px solid transparent;
 	background: transparent;
 	padding: 0.75rem 1rem;
-	/* color: var(--pixel-text-primary); */
+	color: var(--pixel-bg-deep);
 	font-family: "IBM VGA", sans-serif;
 	letter-spacing: 0.1em;
 	text-align: left;
 	text-transform: uppercase;
+}
+
+.pixel-nav-button:hover {
+	box-shadow: 0 0 8px var(--pixel-bg-glow);
+    border-color: var(--pixel-bg-glow);
+    color: var(--pixel-bg-glow);
 }
 
 .pixel-nav-button::before {

@@ -6,6 +6,7 @@ import '../../styles/pixel-theme.css';
 type NavItem = {
 	id: string;
 	label: string;
+	url?: string | null;
 };
 
 interface Props {
@@ -14,14 +15,16 @@ interface Props {
 	navItems?: NavItem[];
 	logoText?: string;
 	sidebarIntro?: string;
+	listRoute?: string;
 }
 
 const {
 	pageTitle,
 	description = pageTitle,
 	navItems = [],
-	logoText = 'GV',
+	logoText = 'GVLab',
 	sidebarIntro,
+	listRoute = null,
 } = Astro.props;
 
 const hasNav = navItems.length > 0;
@@ -49,6 +52,12 @@ const hasNav = navItems.length > 0;
 								</button>
 							))
 						}
+
+						{listRoute && (
+							<a class="pixel-nav-button" href={listRoute}>
+								&larr; Back to list
+							</a>
+						)}
 					</nav>
 				</aside>
 			)}
@@ -58,7 +67,7 @@ const hasNav = navItems.length > 0;
 		</div>
 		<Footer />
 		<script type="module">
-			const navButtons = document.querySelectorAll('.pixel-nav-button');
+			const navButtons = document.querySelectorAll('button.pixel-nav-button');
 			const panels = document.querySelectorAll('.pixel-panel');
 
 			function setActive(targetId) {
