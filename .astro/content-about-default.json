@@ -2,7 +2,7 @@
   "slug": "default",
   "headline": "Who am I?",
   "subheadline": "6+ Years Experience | Freelance & Remote Friendly",
-  "bio": "<p>I’m <strong>Giang (Vincent)</strong>, a <strong>Senior Full-Stack Developer</strong> with over <strong>6 years of experience</strong> building scalable, secure, and high-performance web applications for global clients.</p><p>💻 <strong>What I Do</strong></p><p>I build <strong>high-performing websites</strong> and <strong>e-commerce</strong> experiences using <strong>Shopware</strong>, <strong>Laravel</strong>, <strong>VueJS</strong>, and modern <strong>JavaScript</strong> frameworks. From design to deployment — I turn complexity into clarity and growth-ready digital products.<br>I specialize in <strong>end-to-end web development</strong>, delivering clean architecture, efficient APIs, and polished user interfaces.</p><ul><li><p><strong>Deep e-commerce expertise</strong> (Shopware, custom shops, headless)</p></li><li><p><strong>Full-stack mastery</strong> (Laravel + Vue + Next.js)</p></li><li><p><strong>Design → development → deployment in one service</strong></p></li><li><p><strong>Clear communication and transparent pricing</strong></p></li><li><p><strong>Fast delivery with premium code quality</strong></p></li><li><p><strong>Experience across major EU brands &amp; retail environments</strong></p></li><li><p><strong>Pixel-perfect UI and conversion-focused UX</strong></p></li></ul>",
+  "bio": "<p>I’m <strong>Giang Vincent</strong>, a <strong>Senior Full-Stack Developer</strong> with over <strong>7 years of experience</strong> building scalable, secure, and high-performance web applications for global clients.</p><p>💻 <strong>What I Do</strong></p><p>I build <strong>high-performing websites</strong> and <strong>e-commerce</strong> experiences using <strong>Shopware</strong>, <strong>Laravel</strong>, <strong>VueJS</strong>, and modern <strong>JavaScript</strong> frameworks. From design to deployment — I turn complexity into clarity and growth-ready digital products.<br>I specialize in <strong>end-to-end web development</strong>, delivering clean architecture, efficient APIs, and polished user interfaces.</p><ul><li><p><strong>Deep e-commerce expertise</strong> (Shopware, headless)</p></li><li><p><strong>Full-stack mastery</strong> (Laravel + Vue + Next.js)</p></li><li><p><strong>Design → development → deployment in one service</strong></p></li><li><p><strong>Clear communication and transparent pricing</strong></p></li><li><p><strong>Fast delivery with premium code quality</strong></p></li><li><p><strong>Pixel-perfect UI and conversion-focused UX</strong></p></li></ul>",
   "location": "Da Nang, Viet Nam",
   "years_experience": 6,
   "primary_cta_label": "Contact me",
@@ -17,7 +17,9 @@
     "Laravel",
     "Html & CSS",
     "Shopware 6",
-    "React"
+    "React",
+    "Tailwind CSS",
+    "UI/UX"
   ],
   "avatar_url": null,
   "meta": []
