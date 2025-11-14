@@ -48,9 +48,9 @@ const tasks = [
 ];
 
 const apiHost = new URL(apiBaseUrl).hostname;
-// if (apiHost.endsWith('.ddev.site')) {
-// 	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-// }
+if (apiHost.endsWith('.ddev.site')) {
+	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
 
 async function writePayload(cacheFile, payload) {
 	await writeFile(cacheFile, JSON.stringify(payload, null, 2), 'utf-8');
