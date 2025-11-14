@@ -50,8 +50,7 @@ function normalizeService(service: ApiService): Service {
 		body: service.body ?? '',
 		coverImageUrl: service.cover_image_url ?? undefined,
 		isFeatured: Boolean(service.is_featured),
-		sortOrder: typeof service.sort_order === 'number' ? service.sort_order : Number.MAX_SAFE_INTEGER,
-		meta: normalizeMeta(service.meta),
+		sortOrder: typeof service.sort_order === 'number' ? service.sort_order : Number.MAX_SAFE_INTEGER
 	};
 }
 

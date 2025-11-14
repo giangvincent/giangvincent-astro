@@ -32,7 +32,7 @@ const { title, description, href, coverImageUrl, tags = [] } = Astro.props;
 	<div class="pixel-card pixel-card--static">
 		{coverImageUrl && <img class="pixel-card-cover" src={coverImageUrl} alt={title} loading="lazy" />}
 		<h3>{title}</h3>
-		{description && <p>{description}</p>}
+		{description && <p set:html={description}></p>}
 		{
 			tags.length > 0 && (
 				<ul class="pixel-card-tags">

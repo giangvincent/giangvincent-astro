@@ -219,12 +219,11 @@ function stripHtml(input?: string | null) {
 }
 
 function fallbackDescription(primary?: string | null, secondary?: string | null) {
-	const first = stripHtml(primary);
-	if (first.length > 0) {
-		return first.slice(0, 280);
+	if (primary && primary.length > 0) {
+		return primary;
 	}
-	const fallback = stripHtml(secondary).slice(0, 280);
-	return fallback.length > 0 ? fallback : 'Details coming soon.';
+
+	return secondary && secondary.length > 0 ? secondary : 'Details coming soon.';
 }
 
 function normalizeMetaTags(meta?: Record<string, unknown> | unknown[] | null) {
