@@ -1,7 +1,7 @@
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const DEFAULT_API_BASE_URL = 'https://gvlog.ddev.site';
+const DEFAULT_API_BASE_URL = 'http://gvlog.ddev.site';
 const API_BASE_URL =
 	(typeof import.meta !== 'undefined' && import.meta.env?.BLOG_API_BASE_URL) ||
 	DEFAULT_API_BASE_URL;
@@ -11,9 +11,7 @@ allowSelfSignedIfNeeded(API_BASE_URL);
 function allowSelfSignedIfNeeded(baseUrl: string) {
 	try {
 		const candidate = new URL(baseUrl);
-		if (candidate.hostname.endsWith('.ddev.site')) {
-			process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-		}
+
 	} catch {
 		// Ignore parse errors.
 	}

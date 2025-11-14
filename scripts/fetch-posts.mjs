@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
 const cacheDir = path.join(projectRoot, '.astro');
 
-const apiBaseUrl = process.env.BLOG_API_BASE_URL ?? 'https://gvlog.ddev.site';
+const apiBaseUrl = process.env.BLOG_API_BASE_URL ?? 'http://gvlog.ddev.site';
 const tasks = [
 	{
 		label: 'blog posts',
@@ -48,9 +48,6 @@ const tasks = [
 ];
 
 const apiHost = new URL(apiBaseUrl).hostname;
-if (apiHost.endsWith('.ddev.site')) {
-	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-}
 
 async function writePayload(cacheFile, payload) {
 	await writeFile(cacheFile, JSON.stringify(payload, null, 2), 'utf-8');
