@@ -19,7 +19,7 @@ Name
 Email
 <input type="email" name="email" required placeholder="you@email.com"> </label> <label>
 Message
-<textarea name="message" required placeholder="How can I help?"></textarea> </label> <div class="g-recaptcha" data-sitekey="6LfBlA0sAAAAAI2XW9bz37gU3beVZ-A6S872iyKX"></div> <button class="pixel-cta" type="submit">Send</button> <p class="pixel-form-status" id="pixel-contact-status" hidden></p> </form> </div> </div> </div> <script src="https://www.google.com/recaptcha/api.js" async defer></script> <script type="module" defer>
+<textarea name="message" required placeholder="How can I help?"></textarea> </label> <div class="g-recaptcha" data-sitekey="6LfBlA0sAAAAAI2XW9bz37gU3beVZ-A6S872iyKX"></div> <button class="pixel-cta" type="submit">Send</button> <p class="pixel-form-status" id="pixel-contact-status" hidden></p> </form> </div> </div> </div> <script type="module" defer>
 	if (!window.__pixelContactModalInitialized) {
 		const root = document.querySelector('[data-contact-modal-root]');
 		if (!root) {
@@ -60,6 +60,11 @@ Message
 				if (!trigger) return;
 				event.preventDefault();
 				const source = trigger.getAttribute('data-contact-source') || 'site';
+				const gCaptchaJS = document.createElement('script');
+				gCaptchaJS.src = 'https://www.google.com/recaptcha/api.js';
+				gCaptchaJS.async = true;
+				gCaptchaJS.defer = true;
+				document.head.appendChild(gCaptchaJS);
 				openModal(source);
 			});
 

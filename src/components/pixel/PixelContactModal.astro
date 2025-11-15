@@ -43,7 +43,6 @@ const recaptchaSiteKey = '6LfBlA0sAAAAAI2XW9bz37gU3beVZ-A6S872iyKX';
 		</div>
 	</div>
 </div>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script type="module" defer>
 	if (!window.__pixelContactModalInitialized) {
 		const root = document.querySelector('[data-contact-modal-root]');
@@ -85,6 +84,11 @@ const recaptchaSiteKey = '6LfBlA0sAAAAAI2XW9bz37gU3beVZ-A6S872iyKX';
 				if (!trigger) return;
 				event.preventDefault();
 				const source = trigger.getAttribute('data-contact-source') || 'site';
+				const gCaptchaJS = document.createElement('script');
+				gCaptchaJS.src = 'https://www.google.com/recaptcha/api.js';
+				gCaptchaJS.async = true;
+				gCaptchaJS.defer = true;
+				document.head.appendChild(gCaptchaJS);
 				openModal(source);
 			});
 
