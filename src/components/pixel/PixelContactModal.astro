@@ -4,7 +4,8 @@ import '../../styles/pixel-theme.css';
 const modalId = 'pixel-contact-modal';
 const formId = 'pixel-contact-form';
 const statusId = 'pixel-contact-status';
-const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/contact';
+const apiUrl = 'https://us-central1-headless-apis-67714.cloudfunctions.net/contact';
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '6LfBlA0sAAAAAI2XW9bz37gU3beVZ-A6S872iyKX';
 ---
 
 <div
@@ -13,6 +14,7 @@ const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/c
 	data-form-id={formId}
 	data-status-id={statusId}
 	data-api-url={apiUrl}
+	data-recaptcha-site-key={recaptchaSiteKey}
 >
 	<div class="pixel-modal" id={modalId} aria-hidden="true">
 		<div class="pixel-modal__panel" role="dialog" aria-modal="true">
@@ -41,19 +43,46 @@ const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/c
 		</div>
 	</div>
 </div>
-<script type="module">
+<script type="module" defer>
 	if (!window.__pixelContactModalInitialized) {
 		const root = document.querySelector('[data-contact-modal-root]');
 		if (!root) {
 			console.warn('Pixel contact modal root not found.');
 		} else {
-			const { modalId, formId, statusId, apiUrl } = root.dataset;
+			const { modalId, formId, statusId, apiUrl, recaptchaSiteKey } = root.dataset;
 
 			const modal = document.getElementById(modalId);
 			const closeButtons = modal.querySelectorAll('[data-modal-close]');
 			const form = document.getElementById(formId);
 			const statusEl = document.getElementById(statusId);
 			const sourceInput = modal.querySelector('[data-contact-source-input]');
+			let recaptchaPromise = null;
+
+			function ensureRecaptcha() {
+				if (!recaptchaSiteKey) {
+					return null;
+				}
+				if (window.__pixelRecaptchaPromise) {
+					return window.__pixelRecaptchaPromise;
+				}
+				window.__pixelRecaptchaPromise = new Promise((resolve, reject) => {
+					function onReady() {
+						window.grecaptcha.ready(() => resolve(window.grecaptcha));
+					}
+					if (window.grecaptcha) {
+						onReady();
+						return;
+					}
+					const script = document.createElement('script');
+					script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`;
+					script.async = true;
+					script.defer = true;
+					script.onload = onReady;
+					script.onerror = reject;
+					document.head.appendChild(script);
+				});
+				return window.__pixelRecaptchaPromise;
+			}
 
 			function resetStatus() {
 				statusEl.hidden = true;
@@ -110,6 +139,18 @@ const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/c
 				const formData = new FormData(form);
 				const payload = Object.fromEntries(formData.entries());
 
+				if (recaptchaSiteKey) {
+					try {
+						const grecaptcha = await ensureRecaptcha();
+						if (grecaptcha) {
+							const token = await grecaptcha.execute(recaptchaSiteKey, { action: 'contact_form' });
+							payload.recaptchaToken = token;
+						}
+					} catch (recaptchaError) {
+						console.warn('reCAPTCHA error', recaptchaError);
+					}
+				}
+
 				try {
 					const response = await fetch(apiUrl, {
 						method: 'POST',
@@ -123,7 +164,7 @@ const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/c
 						throw new Error('Failed to send message');
 					}
 
-				statusEl.textContent = 'Message sent! I’ll reply soon.';
+					statusEl.textContent = 'Message sent! I’ll reply soon.';
 					form.reset();
 					setTimeout(closeModal, 1200);
 				} catch (error) {
