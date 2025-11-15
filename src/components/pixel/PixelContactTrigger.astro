@@ -1,0 +1,21 @@
+---
+interface Props {
+	label?: string;
+	variant?: 'primary' | 'ghost';
+	source?: string;
+	class?: string;
+}
+
+const { label = 'Contact me', variant = 'primary', source = 'site', class: className = '' } = Astro.props;
+const baseClass = variant === 'ghost' ? 'pixel-cta pixel-cta--ghost' : 'pixel-cta';
+const classes = [baseClass, className].filter(Boolean).join(' ');
+---
+
+<button
+	type="button"
+	class={classes}
+	data-contact-trigger
+	data-contact-source={source}
+>
+	{label}
+</button>

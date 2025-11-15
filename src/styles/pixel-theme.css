@@ -232,8 +232,11 @@ body.pixel-body::before {
 	box-shadow: 0 0 15px var(--pixel-shadow);
 	border: 2px solid var(--pixel-border);
 	border-radius: 999px;
+	background-color: transparent;
 	padding: 0.85rem 1.75rem;
 	color: var(--pixel-border);
+    font-size: inherit;
+	font-family: inherit;
 	letter-spacing: 0.2em;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -247,17 +250,17 @@ body.pixel-body::before {
 }
 
 .pixel-modal {
-	position: fixed;
-	inset: 0;
 	display: flex;
-	align-items: center;
+	position: fixed;
 	justify-content: center;
-	padding: 2rem;
-	background: rgba(0, 0, 0, 0.8);
-	z-index: 50;
+	align-items: center;
 	opacity: 0;
-	pointer-events: none;
+	z-index: 50;
 	transition: opacity 0.2s ease;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.8);
+	padding: 2rem;
+	pointer-events: none;
 }
 
 .pixel-modal.is-open {
@@ -267,25 +270,25 @@ body.pixel-body::before {
 
 .pixel-modal__panel {
 	position: relative;
-	width: min(520px, 100%);
-	background: var(--pixel-card-bg);
+	box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
 	border: 3px solid var(--pixel-grid-line);
 	border-radius: 18px;
+	background: var(--pixel-card-bg);
 	padding: 2rem;
-	box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+	width: min(520px, 100%);
 }
 
 .pixel-modal__close {
 	position: absolute;
 	top: 0.75rem;
 	right: 0.75rem;
-	background: transparent;
+	cursor: pointer;
 	border: 1px solid var(--pixel-border);
 	border-radius: 50%;
-	color: var(--pixel-text-primary);
+	background: transparent;
 	width: 32px;
 	height: 32px;
-	cursor: pointer;
+	color: var(--pixel-text-primary);
 }
 
 .pixel-form {
@@ -298,22 +301,22 @@ body.pixel-body::before {
 .pixel-form label {
 	display: flex;
 	flex-direction: column;
+	gap: 0.5rem;
+	color: var(--pixel-text-muted);
 	font-size: 0.75rem;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
-	gap: 0.5rem;
-	color: var(--pixel-text-muted);
 }
 
 .pixel-form input,
 .pixel-form textarea {
-	background: transparent;
 	border: 1px solid var(--pixel-grid-line);
 	border-radius: 12px;
+	background: transparent;
 	padding: 0.85rem 1rem;
-	font-family: inherit;
-	font-size: 0.9rem;
 	color: var(--pixel-text-primary);
+	font-size: 0.9rem;
+	font-family: inherit;
 }
 
 .pixel-form textarea {
@@ -322,9 +325,9 @@ body.pixel-body::before {
 }
 
 .pixel-form-status {
-	font-size: 0.85rem;
-	color: var(--pixel-border);
 	margin-top: 0.5rem;
+	color: var(--pixel-border);
+	font-size: 0.85rem;
 }
 
 .pixel-form-status.is-error {

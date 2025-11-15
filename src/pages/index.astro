@@ -2,6 +2,7 @@
 import PixelLayout from "../components/pixel/PixelLayout.astro";
 import PixelSection from "../components/pixel/PixelSection.astro";
 import PixelCard from "../components/pixel/PixelCard.astro";
+import PixelContactTrigger from "../components/pixel/PixelContactTrigger.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { fetchAboutContent, fetchHomepageContent } from "../lib/contentApi";
 
@@ -46,9 +47,7 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
       </div>
     </div>
     <div class="pixel-card-tags" style="margin-top:1.5rem;">
-      <a class="pixel-cta" href={aboutContent.primaryCtaUrl}>
-        {aboutContent.primaryCtaLabel}
-      </a>
+      <PixelContactTrigger label="Open contact form" source="About contact" />
       <a class="pixel-cta" href="/about">More details</a>
     </div>
   </PixelSection>

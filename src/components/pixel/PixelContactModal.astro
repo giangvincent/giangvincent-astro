@@ -1,22 +1,19 @@
 ---
 import '../../styles/pixel-theme.css';
 
-interface Props {
-	triggerLabel?: string;
-	triggerClass?: string;
-	source?: string;
-}
-
-const { triggerLabel = 'Contact me', triggerClass = '', source = 'site' } = Astro.props;
-const modalId = `pixel-modal`;
-const formId = `contact-form`;
+const modalId = 'pixel-contact-modal';
+const formId = 'pixel-contact-form';
+const statusId = 'pixel-contact-status';
 const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/contact';
 ---
 
-<div class="pixel-contact">
-	<button class={`pixel-cta ${triggerClass}`} type="button" data-modal-trigger={modalId}>
-		{triggerLabel}
-	</button>
+<div
+	data-contact-modal-root
+	data-modal-id={modalId}
+	data-form-id={formId}
+	data-status-id={statusId}
+	data-api-url={apiUrl}
+>
 	<div class="pixel-modal" id={modalId} aria-hidden="true">
 		<div class="pixel-modal__panel" role="dialog" aria-modal="true">
 			<button class="pixel-modal__close" type="button" data-modal-close aria-label="Close contact form">
@@ -24,8 +21,8 @@ const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/c
 			</button>
 			<h3>Send a transmission</h3>
 			<p>Share a few details and I’ll respond within 48 hours.</p>
-			<form class="pixel-form" id={formId} data-action={apiUrl} data-contact-form>
-				<input type="hidden" name="source" value={source} />
+			<form class="pixel-form" id={formId} data-contact-form>
+				<input type="hidden" name="source" value="" data-contact-source-input />
 				<label>
 					Name
 					<input type="text" name="name" required placeholder="Ada Lovelace" />
@@ -39,78 +36,104 @@ const apiUrl = 'https://asia-northeast1-headless-apis-67714.cloudfunctions.net/c
 					<textarea name="message" required placeholder="How can I help?"></textarea>
 				</label>
 				<button class="pixel-cta" type="submit">Send</button>
-				<p class="pixel-form-status" data-status hidden></p>
+				<p class="pixel-form-status" id={statusId} hidden></p>
 			</form>
 		</div>
 	</div>
 </div>
 <script type="module">
-	const MODAL_ID = `pixel-modal`;
-	const FORM_ID = `contact-form`;
-	const API_URL = '';
+	if (!window.__pixelContactModalInitialized) {
+		const root = document.querySelector('[data-contact-modal-root]');
+		if (!root) {
+			console.warn('Pixel contact modal root not found.');
+		} else {
+			const { modalId, formId, statusId, apiUrl } = root.dataset;
 
-	const modal = document.getElementById(MODAL_ID);
-	const triggers = document.querySelectorAll(`[data-modal-trigger="${MODAL_ID}"]`);
-	const closeButtons = modal.querySelectorAll('[data-modal-close]');
-	const form = document.getElementById(FORM_ID);
-	const statusEl = form.querySelector('[data-status]');
+			const modal = document.getElementById(modalId);
+			const closeButtons = modal.querySelectorAll('[data-modal-close]');
+			const form = document.getElementById(formId);
+			const statusEl = document.getElementById(statusId);
+			const sourceInput = modal.querySelector('[data-contact-source-input]');
 
-	function openModal() {
-		modal.classList.add('is-open');
-		modal.setAttribute('aria-hidden', 'false');
-	}
-
-	function closeModal() {
-		modal.classList.remove('is-open');
-		modal.setAttribute('aria-hidden', 'true');
-	}
-
-	triggers.forEach((trigger) => {
-		trigger.addEventListener('click', openModal);
-	});
-
-	closeButtons.forEach((button) => {
-		button.addEventListener('click', closeModal);
-	});
-
-	modal.addEventListener('click', (event) => {
-		if (event.target === modal) {
-			closeModal();
-		}
-	});
-
-	form.addEventListener('submit', async (event) => {
-		event.preventDefault();
-		statusEl.hidden = false;
-		statusEl.textContent = 'Sending...';
-		statusEl.classList.remove('is-error');
-
-		const formData = new FormData(form);
-		const payload = Object.fromEntries(formData.entries());
-		const apiUrl = form.getAttribute('data-action');
-
-		try {
-			const response = await fetch(apiUrl, {
-				method: 'POST',
-				mode: 'no-cors',
-				headers: {
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Origin':'*'
-				},
-				body: JSON.stringify(payload),
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to send message');
+			function resetStatus() {
+				statusEl.hidden = true;
+				statusEl.classList.remove('is-error');
+				statusEl.textContent = '';
 			}
 
-			statusEl.textContent = 'Message sent! I’ll reply soon.';
-			form.reset();
-			setTimeout(closeModal, 1200);
-		} catch (error) {
-			console.error(error);
-			statusEl.textContent = 'Something went wrong. Please try again.';
-			statusEl.classList.add('is-error');
+			function openModal(source) {
+				resetStatus();
+				if (sourceInput) {
+					sourceInput.value = source || 'site';
+				}
+				modal.classList.add('is-open');
+				modal.setAttribute('aria-hidden', 'false');
+			}
+
+			function closeModal() {
+				modal.classList.remove('is-open');
+				modal.setAttribute('aria-hidden', 'true');
+			}
+
+			document.addEventListener('click', (event) => {
+				const target = event.target;
+				if (!(target instanceof Element)) return;
+				const trigger = target.closest('[data-contact-trigger]');
+				if (!trigger) return;
+				event.preventDefault();
+				const source = trigger.getAttribute('data-contact-source') || 'site';
+				openModal(source);
+			});
+
+			closeButtons.forEach((button) => {
+				button.addEventListener('click', closeModal);
+			});
+
+			modal.addEventListener('click', (event) => {
+				if (event.target === modal) {
+					closeModal();
+				}
+			});
+
+			document.addEventListener('keydown', (event) => {
+				if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+					closeModal();
+				}
+			});
+
+			form.addEventListener('submit', async (event) => {
+				event.preventDefault();
+				statusEl.hidden = false;
+				statusEl.textContent = 'Sending...';
+				statusEl.classList.remove('is-error');
+
+				const formData = new FormData(form);
+				const payload = Object.fromEntries(formData.entries());
+
+				try {
+					const response = await fetch(apiUrl, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(payload),
+					});
+
+					if (!response.ok) {
+						throw new Error('Failed to send message');
+					}
+
+				statusEl.textContent = 'Message sent! I’ll reply soon.';
+					form.reset();
+					setTimeout(closeModal, 1200);
+				} catch (error) {
+					console.error(error);
+					statusEl.textContent = 'Something went wrong. Please try again.';
+					statusEl.classList.add('is-error');
+				}
+			});
+
+			window.__pixelContactModalInitialized = true;
 		}
-	});
+	}
 </script>

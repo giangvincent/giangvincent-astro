@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../BaseHead.astro';
 import Footer from '../Footer.astro';
+import PixelContactModal from './PixelContactModal.astro';
 import '../../styles/pixel-theme.css';
 
 type NavItem = {
@@ -65,6 +66,7 @@ const hasNav = navItems.length > 0;
 				<slot />
 			</main>
 		</div>
+		<PixelContactModal />
 		<Footer />
 		<script type="module">
 			const navButtons = document.querySelectorAll('button.pixel-nav-button');

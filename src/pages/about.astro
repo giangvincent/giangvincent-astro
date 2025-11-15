@@ -2,7 +2,7 @@
 import PixelLayout from "../components/pixel/PixelLayout.astro";
 import PixelSection from "../components/pixel/PixelSection.astro";
 import PixelCard from "../components/pixel/PixelCard.astro";
-import PixelContactModal from "../components/pixel/PixelContactModal.astro";
+import PixelContactTrigger from "../components/pixel/PixelContactTrigger.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import {
   fetchAboutContent,
@@ -125,14 +125,14 @@ const secondaryCtaAvailable = Boolean(
           }
         </div>
         <div class="pixel-card-tags" style="margin-top:1.5rem;">
-          <PixelContactModal triggerLabel={primaryCtaLabel} source="About summary" />
+          <PixelContactTrigger label={primaryCtaLabel} source="About summary" />
           {
             secondaryCtaAvailable && (
-              <a
-                class="pixel-cta pixel-cta--ghost"
-                href={aboutContent.secondaryCtaUrl}>
-                {aboutContent.secondaryCtaLabel}
-              </a>
+              <PixelContactTrigger
+                label={aboutContent.secondaryCtaLabel}
+                variant="ghost"
+                source="About summary secondary"
+              />
             )
           }
         </div>
@@ -170,6 +170,6 @@ const secondaryCtaAvailable = Boolean(
       Drop a short brief, a timeline, and any handy context in the form and I’ll
       reply within 48 hours with next steps.
     </p>
-    <PixelContactModal triggerLabel="Open contact form" source="About contact" />
+    <PixelContactTrigger label="Open contact form" source="About contact" />
   </PixelSection>
 </PixelLayout>
