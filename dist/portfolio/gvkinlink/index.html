@@ -7,7 +7,7 @@ Build your family tree, share memories, and link generations — forever."><meta
 Visit Project
 </a> </div> <div> <div class="pixel-meta-title">Source</div> <a class="pixel-cta" href="https://github.com/giangvincent" target="_blank" rel="noreferrer">
 View Source
-</a> </div> </div> <ul class="pixel-tag-list"> <li class="pixel-tag">PHP</li><li class="pixel-tag">Tailwind</li><li class="pixel-tag">JavaScript</li><li class="pixel-tag">Vue.js</li><li class="pixel-tag">Laravel</li> </ul> </div>   </section> <section id="case-study" class="pixel-panel"> <p class="pixel-panel-label">Build Log</p> <div class="pixel-section-header"> <h2>Case study</h2> <p>Notes from the trenches—goals, obstacles, and shipping moments.</p> </div>  <div class="pixel-article-body"><p>A <strong>private family networking platform</strong> where users:</p><ul><li><p>Build and <strong>visualize their family tree</strong> (with modern, interactive design).</p></li><li><p><strong>Connect relatives</strong> (both close and distant) like a “private Facebook for your family.”</p></li><li><p>Share <strong>photos, stories, milestones, or documents</strong> (weddings, heritage, etc.).</p></li><li><p>Manage <strong>heritage data</strong> (birthdays, death anniversaries, important family events).</p></li><li><p><strong>Invite relatives</strong> securely, ensuring only family members can access.</p></li></ul><p>Essentially:<strong> Facebook + Family Album</strong>, but <strong>private and modern</strong>.</p><p>This is like a Weekend project</p></div>   </section>  </main> </div> <div data-contact-modal-root data-modal-id="pixel-contact-modal" data-form-id="pixel-contact-form" data-status-id="pixel-contact-status" data-api-url="https://us-central1-headless-apis-67714.cloudfunctions.net/contact" data-recaptcha-site-key="6LfBlA0sAAAAAI2XW9bz37gU3beVZ-A6S872iyKX"> <div class="pixel-modal" id="pixel-contact-modal" aria-hidden="true"> <div class="pixel-modal__panel" role="dialog" aria-modal="true"> <button class="pixel-modal__close" type="button" data-modal-close aria-label="Close contact form">
+</a> </div> </div> <ul class="pixel-tag-list"> <li class="pixel-tag">PHP</li><li class="pixel-tag">Tailwind</li><li class="pixel-tag">JavaScript</li><li class="pixel-tag">Vue.js</li><li class="pixel-tag">Laravel</li> </ul> </div>   </section> <section id="case-study" class="pixel-panel"> <p class="pixel-panel-label">Build Log</p> <div class="pixel-section-header"> <h2>Case study</h2> <p>Notes from the trenches—goals, obstacles, and shipping moments.</p> </div>  <div class="pixel-article-body"><p>A <strong>private family networking platform</strong> where users:</p><ul><li><p>Build and <strong>visualize their family tree</strong> (with modern, interactive design).</p></li><li><p><strong>Connect relatives</strong> (both close and distant) like a “private Facebook for your family.”</p></li><li><p>Share <strong>photos, stories, milestones, or documents</strong> (weddings, heritage, etc.).</p></li><li><p>Manage <strong>heritage data</strong> (birthdays, death anniversaries, important family events).</p></li><li><p><strong>Invite relatives</strong> securely, ensuring only family members can access.</p></li></ul><p>Essentially:<strong> Facebook + Family Album</strong>, but <strong>private and modern</strong>.</p><p>This is like a Weekend project</p></div>   </section>  </main> </div> <div data-contact-modal-root data-modal-id="pixel-contact-modal" data-form-id="pixel-contact-form" data-status-id="pixel-contact-status" data-api-url="https://us-central1-headless-apis-67714.cloudfunctions.net/contact"> <div class="pixel-modal" id="pixel-contact-modal" aria-hidden="true"> <div class="pixel-modal__panel" role="dialog" aria-modal="true"> <button class="pixel-modal__close" type="button" data-modal-close aria-label="Close contact form">
 ×
 </button> <h3>Send a transmission</h3> <p>Share a few details and I’ll respond within 48 hours.</p> <form class="pixel-form" id="pixel-contact-form" data-contact-form> <input type="hidden" name="source" value="" data-contact-source-input> <label>
 Name
@@ -15,46 +15,19 @@ Name
 Email
 <input type="email" name="email" required placeholder="you@email.com"> </label> <label>
 Message
-<textarea name="message" required placeholder="How can I help?"></textarea> </label> <button class="pixel-cta" type="submit">Send</button> <p class="pixel-form-status" id="pixel-contact-status" hidden></p> </form> </div> </div> </div> <script type="module" defer>
+<textarea name="message" required placeholder="How can I help?"></textarea> </label> <div class="g-recaptcha" data-sitekey="6LfBlA0sAAAAAI2XW9bz37gU3beVZ-A6S872iyKX"></div> <button class="pixel-cta" type="submit">Send</button> <p class="pixel-form-status" id="pixel-contact-status" hidden></p> </form> </div> </div> </div> <script src="https://www.google.com/recaptcha/api.js" async defer></script> <script type="module" defer>
 	if (!window.__pixelContactModalInitialized) {
 		const root = document.querySelector('[data-contact-modal-root]');
 		if (!root) {
 			console.warn('Pixel contact modal root not found.');
 		} else {
-			const { modalId, formId, statusId, apiUrl, recaptchaSiteKey } = root.dataset;
+			const { modalId, formId, statusId, apiUrl } = root.dataset;
 
 			const modal = document.getElementById(modalId);
 			const closeButtons = modal.querySelectorAll('[data-modal-close]');
 			const form = document.getElementById(formId);
 			const statusEl = document.getElementById(statusId);
 			const sourceInput = modal.querySelector('[data-contact-source-input]');
-			let recaptchaPromise = null;
-
-			function ensureRecaptcha() {
-				if (!recaptchaSiteKey) {
-					return null;
-				}
-				if (window.__pixelRecaptchaPromise) {
-					return window.__pixelRecaptchaPromise;
-				}
-				window.__pixelRecaptchaPromise = new Promise((resolve, reject) => {
-					function onReady() {
-						window.grecaptcha.ready(() => resolve(window.grecaptcha));
-					}
-					if (window.grecaptcha) {
-						onReady();
-						return;
-					}
-					const script = document.createElement('script');
-					script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`;
-					script.async = true;
-					script.defer = true;
-					script.onload = onReady;
-					script.onerror = reject;
-					document.head.appendChild(script);
-				});
-				return window.__pixelRecaptchaPromise;
-			}
 
 			function resetStatus() {
 				statusEl.hidden = true;
@@ -110,18 +83,6 @@ Message
 
 				const formData = new FormData(form);
 				const payload = Object.fromEntries(formData.entries());
-
-				if (recaptchaSiteKey) {
-					try {
-						const grecaptcha = await ensureRecaptcha();
-						if (grecaptcha) {
-							const token = await grecaptcha.execute(recaptchaSiteKey, { action: 'contact_form' });
-							payload.recaptchaToken = token;
-						}
-					} catch (recaptchaError) {
-						console.warn('reCAPTCHA error', recaptchaError);
-					}
-				}
 
 				try {
 					const response = await fetch(apiUrl, {

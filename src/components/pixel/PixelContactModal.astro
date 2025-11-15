@@ -14,7 +14,6 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '6LfBlA0sA
 	data-form-id={formId}
 	data-status-id={statusId}
 	data-api-url={apiUrl}
-	data-recaptcha-site-key={recaptchaSiteKey}
 >
 	<div class="pixel-modal" id={modalId} aria-hidden="true">
 		<div class="pixel-modal__panel" role="dialog" aria-modal="true">
@@ -37,52 +36,27 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '6LfBlA0sA
 					Message
 					<textarea name="message" required placeholder="How can I help?"></textarea>
 				</label>
+				<div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
 				<button class="pixel-cta" type="submit">Send</button>
 				<p class="pixel-form-status" id={statusId} hidden></p>
 			</form>
 		</div>
 	</div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script type="module" defer>
 	if (!window.__pixelContactModalInitialized) {
 		const root = document.querySelector('[data-contact-modal-root]');
 		if (!root) {
 			console.warn('Pixel contact modal root not found.');
 		} else {
-			const { modalId, formId, statusId, apiUrl, recaptchaSiteKey } = root.dataset;
+			const { modalId, formId, statusId, apiUrl } = root.dataset;
 
 			const modal = document.getElementById(modalId);
 			const closeButtons = modal.querySelectorAll('[data-modal-close]');
 			const form = document.getElementById(formId);
 			const statusEl = document.getElementById(statusId);
 			const sourceInput = modal.querySelector('[data-contact-source-input]');
-			let recaptchaPromise = null;
-
-			function ensureRecaptcha() {
-				if (!recaptchaSiteKey) {
-					return null;
-				}
-				if (window.__pixelRecaptchaPromise) {
-					return window.__pixelRecaptchaPromise;
-				}
-				window.__pixelRecaptchaPromise = new Promise((resolve, reject) => {
-					function onReady() {
-						window.grecaptcha.ready(() => resolve(window.grecaptcha));
-					}
-					if (window.grecaptcha) {
-						onReady();
-						return;
-					}
-					const script = document.createElement('script');
-					script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`;
-					script.async = true;
-					script.defer = true;
-					script.onload = onReady;
-					script.onerror = reject;
-					document.head.appendChild(script);
-				});
-				return window.__pixelRecaptchaPromise;
-			}
 
 			function resetStatus() {
 				statusEl.hidden = true;
@@ -138,18 +112,6 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '6LfBlA0sA
 
 				const formData = new FormData(form);
 				const payload = Object.fromEntries(formData.entries());
-
-				if (recaptchaSiteKey) {
-					try {
-						const grecaptcha = await ensureRecaptcha();
-						if (grecaptcha) {
-							const token = await grecaptcha.execute(recaptchaSiteKey, { action: 'contact_form' });
-							payload.recaptchaToken = token;
-						}
-					} catch (recaptchaError) {
-						console.warn('reCAPTCHA error', recaptchaError);
-					}
-				}
 
 				try {
 					const response = await fetch(apiUrl, {
