@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import 'dotenv/config';
 import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
 const cacheDir = path.join(projectRoot, '.astro');
 
-const apiBaseUrl = process.env.BLOG_API_BASE_URL ?? 'http://gvlog.ddev.site';
+const apiBaseUrl = process.env.BLOG_API_BASE_URL;
 const tasks = [
 	{
 		label: 'blog posts',

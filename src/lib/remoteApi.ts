@@ -1,27 +1,17 @@
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const DEFAULT_API_BASE_URL = 'http://gvlog.ddev.site';
-const API_BASE_URL =
-	(typeof import.meta !== 'undefined' && import.meta.env?.BLOG_API_BASE_URL) ||
-	DEFAULT_API_BASE_URL;
-
-allowSelfSignedIfNeeded(API_BASE_URL);
-
-function allowSelfSignedIfNeeded(baseUrl: string) {
-	try {
-		const candidate = new URL(baseUrl);
-
-	} catch {
-		// Ignore parse errors.
-	}
-}
+const API_BASE_URL = typeof import.meta !== 'undefined' && import.meta.env?.BLOG_API_BASE_URL;
 
 export function getApiBaseUrl() {
 	return API_BASE_URL;
 }
 
 export function buildApiUrl(pathname: string) {
+	if (!API_BASE_URL) {
+		throw new Error('BLOG_API_BASE_URL is not defined');
+	}
+
 	return new URL(pathname, API_BASE_URL).toString();
 }
 

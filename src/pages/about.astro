@@ -2,6 +2,7 @@
 import PixelLayout from "../components/pixel/PixelLayout.astro";
 import PixelSection from "../components/pixel/PixelSection.astro";
 import PixelCard from "../components/pixel/PixelCard.astro";
+import PixelContactModal from "../components/pixel/PixelContactModal.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import {
   fetchAboutContent,
@@ -124,7 +125,7 @@ const secondaryCtaAvailable = Boolean(
           }
         </div>
         <div class="pixel-card-tags" style="margin-top:1.5rem;">
-          <a class="pixel-cta" href={primaryCtaUrl}>{primaryCtaLabel}</a>
+          <PixelContactModal triggerLabel={primaryCtaLabel} source="About summary" />
           {
             secondaryCtaAvailable && (
               <a
@@ -166,10 +167,9 @@ const secondaryCtaAvailable = Boolean(
     title="Let’s collaborate"
     description="Have a roadmap, a stubborn bug, or a moonshot in mind? I’m all ears.">
     <p class="pixel-intro-body">
-      Send a note to <a href={primaryCtaUrl}
-        >{primaryCtaUrl.replace("mailto:", "")}</a
-      > with a short brief, a timeline, and any handy context. I’ll reply within
-      48 hours with next steps and a plan to get things moving.
+      Drop a short brief, a timeline, and any handy context in the form and I’ll
+      reply within 48 hours with next steps.
     </p>
+    <PixelContactModal triggerLabel="Open contact form" source="About contact" />
   </PixelSection>
 </PixelLayout>

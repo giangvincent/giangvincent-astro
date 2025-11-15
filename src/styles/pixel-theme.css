@@ -120,6 +120,7 @@ body.pixel-body::before {
 	background: transparent;
 	padding: 0.75rem 1rem;
 	color: var(--pixel-bg-deep);
+	font-size: 16px;
 	font-family: "IBM VGA", sans-serif;
 	letter-spacing: 0.1em;
 	text-align: left;
@@ -243,6 +244,91 @@ body.pixel-body::before {
 	border-color: var(--pixel-border-soft);
 	background: transparent;
 	color: var(--pixel-text-primary);
+}
+
+.pixel-modal {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 50;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s ease;
+}
+
+.pixel-modal.is-open {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.pixel-modal__panel {
+	position: relative;
+	width: min(520px, 100%);
+	background: var(--pixel-card-bg);
+	border: 3px solid var(--pixel-grid-line);
+	border-radius: 18px;
+	padding: 2rem;
+	box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.pixel-modal__close {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	background: transparent;
+	border: 1px solid var(--pixel-border);
+	border-radius: 50%;
+	color: var(--pixel-text-primary);
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+}
+
+.pixel-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.pixel-form label {
+	display: flex;
+	flex-direction: column;
+	font-size: 0.75rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	gap: 0.5rem;
+	color: var(--pixel-text-muted);
+}
+
+.pixel-form input,
+.pixel-form textarea {
+	background: transparent;
+	border: 1px solid var(--pixel-grid-line);
+	border-radius: 12px;
+	padding: 0.85rem 1rem;
+	font-family: inherit;
+	font-size: 0.9rem;
+	color: var(--pixel-text-primary);
+}
+
+.pixel-form textarea {
+	min-height: 140px;
+	resize: vertical;
+}
+
+.pixel-form-status {
+	font-size: 0.85rem;
+	color: var(--pixel-border);
+	margin-top: 0.5rem;
+}
+
+.pixel-form-status.is-error {
+	color: #ff6b6b;
 }
 
 .pixel-card-grid {
@@ -483,15 +569,11 @@ body.pixel-body::before {
 	.pixel-card-grid {
 		grid-template-columns: 1fr 1fr;
 	}
-	.pixel-card-cover {
-		height: 120px;
-	}
 }
 
 @media (max-width: 640px) {
 	body.pixel-body {
 		margin-top: 3rem;
-
 	}
 
 	.pixel-sidebar-intro {
@@ -516,6 +598,15 @@ body.pixel-body::before {
 	.pixel-footer__links {
 		flex-wrap: wrap;
 		justify-content: center;
+	}
+
+	.pixel-modal {
+		padding: 1rem;
+	}
+
+	.pixel-modal__panel {
+		padding: 1.5rem;
+		width: 100%;
 	}
 }
 
@@ -634,4 +725,3 @@ table thead::after {
     top: 0;
   }
 }
-
