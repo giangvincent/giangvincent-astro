@@ -25,7 +25,7 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
   pageTitle={SITE_TITLE}
   description={SITE_DESCRIPTION}
   navItems={navItems}
-  sidebarIntro="Navigate the console to jump between the latest transmissions.">
+  sidebarIntro="Your Vision. Our Lab. Let’s Build.">
   <PixelSection id="intro" label="Intro" title={aboutContent.title}>
     <div class="pixel-intro-grid">
       <div class="pixel-intro-body">
@@ -47,8 +47,8 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
       </div>
     </div>
     <div class="pixel-card-tags" style="margin-top:1.5rem;">
-      <PixelContactTrigger label="Open contact form" source="About contact" />
-      <a class="pixel-cta" href="/about">More details</a>
+      <PixelContactTrigger label="Initiate a Lab Session" source="Homepage" />
+      <a class="pixel-cta" href="/about">Detail about me</a>
     </div>
   </PixelSection>
 
@@ -57,7 +57,8 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
     label="Lab Drop"
     title="Portfolios"
     description="Latest launches and experiments from the GV lab."
-    footerHref="/portfolio">
+    footerHref="/portfolio"
+    footerLabel="Browse Lab Experiments">
     <div class="pixel-card-grid">
       {
         topPortfolios.length > 0 ? (
@@ -84,7 +85,8 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
     label="Capabilities"
     title="Services"
     description="Delivery menu for product, platform, and growth work."
-    footerHref="/services">
+    footerHref="/services"
+    footerLabel="Enter the Service Vault">
     <div class="pixel-card-grid">
       {
         topServices.length > 0 ? (
@@ -108,7 +110,8 @@ const topBlogs = homepageContent.blogs.slice(0, 4);
     label="Logs"
     title="Blogs"
     description="Fresh notes, tutorials, and behind-the-scenes logs."
-    footerHref="/blog">
+    footerHref="/blog"
+    footerLabel="Open Research Logs">
     <div class="pixel-card-grid">
       {
         topBlogs.length > 0 ? (

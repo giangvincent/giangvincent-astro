@@ -1,6 +1,7 @@
 ---
 import PixelLayout from '../../components/pixel/PixelLayout.astro';
 import PixelSection from '../../components/pixel/PixelSection.astro';
+import PixelContactTrigger from "../../components/pixel/PixelContactTrigger.astro";
 import '../../styles/pixel-theme.css';
 import { fetchServices, type Service } from '../../lib/serviceApi';
 
@@ -63,4 +64,16 @@ const navItems = [
 	>
 		<div class="pixel-article-body" set:html={service.body}></div>
 	</PixelSection>
+
+	<PixelSection
+    id="contact"
+    label="Contact"
+    title="Let’s collaborate"
+    description="Have a roadmap, a stubborn bug, or a moonshot in mind? I’m all ears.">
+    <p class="pixel-intro-body">
+      Drop a short brief, a timeline, and any handy context in the form and I’ll
+      reply within 48 hours with next steps.
+    </p>
+    <PixelContactTrigger label="Initiate a Lab Session" source="About contact" />
+  </PixelSection>
 </PixelLayout>

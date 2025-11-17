@@ -44,7 +44,7 @@ body {
 	background: linear-gradient(var(--gray-gradient)) no-repeat;
 	background-size: 100% 600px;
 	padding: 0;
-	font-family: "MPLUS1Code", sans-serif;
+	font-family: "MPLUS1Code", monospace, sans-serif;
 	text-align: left;
 	word-wrap: break-word;
 	color: rgb(var(--gray-dark));
