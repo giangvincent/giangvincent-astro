@@ -112,8 +112,8 @@ img {
 	height: auto;
 }
 code {
+	border: 1px dashed;
 	border-radius: 2px;
-	background-color: rgb(var(--gray-light));
 	padding: 2px 5px;
 }
 pre {
