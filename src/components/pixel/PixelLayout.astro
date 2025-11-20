@@ -4,6 +4,7 @@ import Footer from '../Footer.astro';
 import PixelContactModal from './PixelContactModal.astro';
 import '../../styles/pixel-theme.css';
 import  SpeedInsights  from "@vercel/speed-insights/astro"
+import Analytics from '@vercel/analytics/astro'
 
 type NavItem = {
 	id: string;
@@ -108,5 +109,6 @@ const hasNav = navItems.length > 0;
 			}
 		</script>
 		<SpeedInsights/>
+		<Analytics/>
 	</body>
 </html>
