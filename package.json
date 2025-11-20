@@ -13,6 +13,7 @@
     "@astrojs/mdx": "^4.3.6",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.6.0",
+    "@vercel/speed-insights": "^1.2.0",
     "astro": "^5.14.1",
     "dotenv": "^17.2.3",
     "sharp": "^0.34.3"

@@ -3,6 +3,7 @@ import BaseHead from '../BaseHead.astro';
 import Footer from '../Footer.astro';
 import PixelContactModal from './PixelContactModal.astro';
 import '../../styles/pixel-theme.css';
+import  SpeedInsights  from "@vercel/speed-insights/astro"
 
 type NavItem = {
 	id: string;
@@ -106,5 +107,6 @@ const hasNav = navItems.length > 0;
 				panels.forEach((panel) => observer.observe(panel));
 			}
 		</script>
+		<SpeedInsights/>
 	</body>
 </html>
