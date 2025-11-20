@@ -31,7 +31,7 @@ const navItems = [{ id: 'article', label: 'Entry' }];
 			{heroImage && <Image width={1200} height={600} src={heroImage} alt="" />}
 			{
 				!heroImage && heroImageUrl && (
-					<img src={heroImageUrl} alt="" loading="lazy" width="1200" height="600" />
+					<img alt={title + 'Cover'} src={heroImageUrl} alt="" loading="lazy" width="1200" height="600" />
 				)
 			}
 			<h1>{title}</h1>

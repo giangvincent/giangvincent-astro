@@ -23,7 +23,7 @@ body.pixel-body {
 	margin: 0;
 	/* background: radial-gradient(circle at top, var(--pixel-bg-glow), var(--pixel-bg-deep) 65%); */
 	min-height: 100vh;
-	color: var(--pixel-text-primary);
+	color: var(--pixel-text-muted);
 }
 
 body.pixel-body::before {
